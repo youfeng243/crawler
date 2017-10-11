@@ -1,0 +1,74 @@
+#  全局配置
+
+# thrift线程池配置
+[server]
+name = 'scheduler'
+host = '127.0.0.1'
+port = 12100
+server_thread_num = 10
+process_thread_num = 20
+
+
+[MYSQL]
+host = 'Crawler-DataServer1'
+port = 3306
+dbname = 'cmb_crawl'
+username = 'work'
+password = 'haizhi@)'
+
+# redis数据库配置
+[redis_tasks]
+host = 'Crawler-DataServer2'
+password = 'haizhi@)'
+port = 6379
+database = 7
+key = 'fail_tasks'
+
+# 分布式汇报数据库配置
+[backend]
+host           =   'Crawler-DataServer2'
+port            =   6379
+password        =   "haizhi@)"
+
+# mongo数据库配置
+[mongodb_conf]
+host = 'Crawler-DataServer2'
+port = 40042
+database = 'crawl_params'
+username="work"
+password="haizhi"
+
+# 选择器配置
+[selector_conf]
+item_queue_limit = 300
+select_seed_task = 'True'
+select_seed_count = 86400
+select_seed_sleep_time = 10
+load_fail_tasks = 'True'
+
+# 消息中间件配置
+[beanstalk_conf]
+host = 'Crawler-Downloader2:Crawler-Downloader1'   # 线上beanstalk内网IP
+port = 11300              # 线上beanstalk内网port
+input_tube = 'scheduler_info'
+output_tube = 'download_req'
+
+[logger]
+level = "info"
+console = false
+
+[site_task_collect_db]
+host            =   'Crawler-DataServer2'
+port            =   40042
+username        =   'work'
+password        =   'haizhi'
+db = "task_collect"
+collection = "site_task"
+
+[seed_task_collect_db]
+host            =   'Crawler-DataServer2'
+port            =   40042
+username        =   'work'
+password        =   'haizhi'
+db = "task_collect"
+collection = "seed_task"

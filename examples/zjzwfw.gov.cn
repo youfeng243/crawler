@@ -1,0 +1,18 @@
+列表页：
+
+
+next page type:
+'format'
+
+next page rule:
+{'format_pattern': 'http://zjzwfw.gov.cn/zjzw/punish/frontpunish/searchall_list.do?areacode=330000&xzcf_code=&pageNo=%s&webid=1&_=1464320920363','format_key': ['pageNo'],'end_condition': {'page_limit': '29'}}
+
+
+
+详情页：
+
+'//table[@class=&prime;xzcf_bg&prime;]'
+
+{'company': '(.//td[@class=&prime;xzcf_xx&prime;])[2]/text()', 'case_name': '//td[contains(@style,&prime;line-height:180&prime;)]/text()', 'content':'string((//td[@class=&prime;xzcf_jds&prime;])[1])'}
+
+

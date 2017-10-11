@@ -1,0 +1,14 @@
+/bdp
+*.pyc
+*.err
+*.out
+/logs
+.idea
+*.swp
+*.old
+*.py.local
+.DS_Store
+/docs/
+gen-py
+i_scheduler/seed.txt
+

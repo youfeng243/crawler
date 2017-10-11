@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+    <title>惠州中級人民法院</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <link href="/courtweb/front/sfgk_hz/css/style.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">var appName = '/courtweb';</script>
+    <script type="text/javascript">var base = '/courtweb';</script>
+    <script type="text/javascript">var webBase = '/courtweb/web';</script>
+    <script type="text/javascript" src="/courtweb/js/myJs.js"></script>
+    <script src="/courtweb/front/sfgk_hz/js/jquery-1.4a2.min.js" type="text/javascript"></script>
+    <!-- ��������TAB��Ч -->
+    <script src="/courtweb/front/sfgk_hz/js/tab.js" type="text/javascript"></script>
+    <!-- ������ѡ����Ŀ������ʾ���� -->
+    <script src="/courtweb/front/sfgk_hz/js/navhightlight.js" type="text/javascript"></script>
+
+    <script src="/courtweb/web_hz/js/WebJs.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div style="display: none;">
+    <form id='theForm' action="/courtweb/front/searchAjxx" method="post">
+        <input id="radnum" name="radnum"/>
+        <input id="ajid" name="ajid"/>
+        <input id="ajcxlx" name="ajcxlx"/>
+        <input id="cxmm" name="cxmm"/>
+        <input id="ah" name="ah"/>
+        <input id="fjm" name="fjm"/>
+        <input type="hidden" name="cs_token_flag" value="1"/>
+    </form>
+</div>
+
+<!-- 头部内容 -->
+<div class="header">
+    <!-- 头部横条 -->
+    <div class="headerbar">
+        <div class="headerbarmain">
+            <div id="headbarfunction">
+                <a href="#" class="hrefs"
+                   onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.hzzy.gov.cn/');">设为首页</a>
+                | <a href="javascript:window.external.AddFavorite('http://www.hzzy.gov.cn/', '惠州中院')"> 加入收藏</a>
+            </div>
+            <div id="weather">
+                <iframe width="450" scrolling="no" height="22" frameborder="0" allowtransparency="true"
+                        src="http://i.tianqi.com/index.php?c=code&id=1&color=%23&icon=1&py=guangzhou&wind=1&num=2"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="headerbg">
+        <div class="headermain">
+            <div class="logo"><img src="/courtweb/front/sfgk_hz/images/hz_logo.png" alt="鎯犲窞涓櫌logo"/></div>
+        </div>
+        <!-- 导航条 -->
+        <div class="nav" id="nav">
+            <ul>
+                <li><a href="http://www.hzzy.gov.cn/" onclick="change_bg(this)" target="_blank">首页</a></li>
+                <li><a href="/courtweb/front/sfgk/JD0-hzsp-" id="hzsp" name="hzsp" onclick="change_bg(this)">审判流程公开</a>
+                </li>
+                <li><a href="/courtweb/front/sfgk/JD0-hzzx-" id="hzzx" name="hzzx" onclick="change_bg(this)">执行信息公开</a>
+                </li>
+                <li><a href="/courtweb/front/sfgk/JD0-hzcpws-" id="hzcpws" name="hzcpws" onclick="change_bg(this)">裁判文书公开</a>
+                </li>
+                <!-- <li><a href="#"  onclick="change_bg(this)">网上服务大厅</a></li> -->
+
+            </ul>
+
+        </div>
+    </div>
+</div>
+<div style="display: none;">
+    <form id='theForm' action="/courtweb/front/searchAjxx" method="post">
+        <input id="radnum" name="radnum"/>
+        <input id="ajid" name="ajid"/>
+        <input id="ajcxlx" name="ajcxlx"/>
+        <input id="cxmm" name="cxmm"/>
+        <input id="ah" name="ah"/>
+        <input id="fjm" name="fjm"/>
+        <input id="gglx" name="gglx"/>
+        <input id="wslx" name="wslx"/>
+
+        <input id="dsr" name="dsr"/>
+        <input id="wsmc" name="wsmc"/>
+        <input id="ay" name="ay"/>
+        <input id="ajlbbm" name="ajlbbm"/>
+        <input type="hidden" name="cs_token_flag" value="1"/>
+    </form>
+</div><!-- 主体内容 -->
+<div class="breadcrumbs"></div>
+<div class="container">
+    <div class="main">
+        <div class="menunav">
+            <div class="hd">
+                <h2>当事人案件查询</h2>
+            </div>
+            <div class="bd">
+                <form id='searchspxx' action="/courtweb/front/searchCheck" method="post">
+                    <div class="message-b1">
+                        <ul>
+                            <li><span>案号&nbsp;&nbsp;&nbsp;&nbsp; ：</span><BR>
+                                （<input type="text" class="" style="width:30px" name="ndh"/>）
+                                <span>
+			               <select id="yhselect" name="yhselect" onchange="dzUpdate()"
+                                   style="width:65px;height:20px;border: 1px solid #ccc;margin:0 2px">
+								  <option value="1">惠中法</option>
+								  <option value="2">粤13</option>
+							</select></span>
+                                <input type="text" class="" style="width:45px" name="zh"/><span id="zidi">字第</span>
+                                <input type="text" class="" style="width:35px" name="xh"/>号
+                                <input type="hidden" id='yh' name="yh" style="width:0px" value="惠中法"/>
+                            </li>
+                            <li><span>密码&nbsp;&nbsp;&nbsp;&nbsp; ：</span>
+                                <input type="text" class="seachlang" name="password"/>
+                            </li>
+                            <li><span>验证码&nbsp;：</span>
+                                <input type="text" name="randomCode" class="seachlang" style="width:40%"/><a
+                                        href="javascript:void(0)"><img
+                                        src="/courtweb/common/random_codeById/JD0css2016080310551444415830- " id="imgId"
+                                        onclick="javascript:onclickImg(this,'splccx')"/></a>
+                                <input type="hidden" id='splccx' name="splccx" class="seachlang" style="width:10%"
+                                       value="JD0css2016080310551444415830"/>
+                                <input type="hidden" id='fjm' name="fjm" class="seachlang" style="width:10%"
+                                       value="JD0"/>
+                                <input type="hidden" id='sp' name="ajcxlx" class="seachlang" style="width:10%"
+                                       value="sp"/>
+                            </li>
+                            <li class="menubutton">
+                                <input type="button" class="suc" onClick="splcSubmit('sp')" value="查询"/>
+                                <input type="reset" class="suc" onClick="splcdsrClearForm()" value="重置"/>
+                            </li>
+
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="breadcrumbs"></div>
+            <div class="hd"><h2>公众案件信息查询</h2></div>
+            <div class="bd">
+                <form id='searchgzxx' action="/courtweb/front/searchCheck" method="post">
+                    <div class="message-b1">
+                        <ul>
+                            <li><span>案号&nbsp;&nbsp;&nbsp;&nbsp;：</span>
+                                <input type="text" class="seachlang" name="ah" style="width:160px"/>
+                            </li>
+                            <li><span>当事人：</span>
+                                <input type="text" class="seachlang" name="dsr" style="width:160px"/>
+                            </li>
+                            <li><span>验证码：</span>
+                                <input type="text" name="randomCode" class="seachlang" style="width:90px"/><a
+                                        href="javascript:void(0)"><img
+                                        src="/courtweb/common/random_codeById/JD0css2016080310551444416758- " id="imgId"
+                                        onclick="javascript:onclickImg(this,'qbcx')"/></a>
+                                <input type="hidden" id='qbcx' name="qbcx" class="seachlang" style="width:10px"
+                                       value="JD0css2016080310551444416758"/>
+                                <input type="hidden" id='fjm' name="fjm" class="seachlang" style="width:10px"
+                                       value="JD0"/>
+                                <input type="hidden" id='qbcx' name="ajcxlx" class="seachlang" style="width:10px"
+                                       value="qbcx"/>
+
+                            </li>
+                            <li class="menubutton">
+                                <input type="button" class="suc" onClick="splcSubmit('qbcx')" value="查询"/>
+                                <input type="reset" class="suc" onClick="gzClearForm()" value="重置"/>
+                            </li>
+
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            function dzUpdate() {
+                var obj = document.getElementById("yhselect");
+                var index = obj.selectedIndex;
+                var value = obj.options[index].value;
+                var text = obj.options[index].text;
+                if ("1" == value) {
+                    document.getElementById('yh').value = '惠中法';
+                    $('#zidi').show();
+                } else if ("2" == value) {
+                    document.getElementById('yh').value = '粤13';
+                    $('#zidi').hide();
+                }
+            }
+        </script>
+        <script>
+            function onclickImg(oThis, id) {
+                var r = new Date().getTime();
+                $('#' + id).val(r);
+                oThis.src = '/courtweb/common/random_codeById/' + r + '-';
+            }
+            function gzclearForm() {
+                $('#searchgzxx').form('clear');
+            }
+            function splcdsrClearForm() {
+                $('#seadsrspxx').form('clear');
+            }
+            function zxdsrClearForm() {
+                $('#seadsrzxxx').form('clear');
+            }
+        </script>
+        <div class="articlemain">
+            <div class="webnav"><span class="arrow"></span><span>司法公开信息</span></div>
+            <div class="articlelist">
+                <ul>
+                    <li><a href="/courtweb/front/viewAjxxGz/33695866855874353-JD0-" target=_blank>（2016）粤13民终2456号<span
+                            class="date">2016-07-28</span></a></li>
+                    <li><a href="/courtweb/front/viewAjxxGz/26430060000311073-JD0-" target=_blank>（2016）粤13执587号<span
+                            class="date">2016-07-28</span></a></li>
+                    <li><a href="/courtweb/front/viewAjxxGz/33694311201054850-JD0-" target=_blank>（2016）粤13执复35号<span
+                            class="date">2016-07-28</span></a></li>
+                    <li><a href="/courtweb/front/viewAjxxGz/33694318544851886-JD0-" target=_blank>（2016）粤13民初238号<span
+                            class="date">2016-07-28</span></a></li>
+                    <li><a href="/courtweb/front/viewAjxxGz/33694999192307239-JD0-" target=_blank>（2016）粤13民终2432号<span
+                            class="date">2016-07-28</span></a></li>
+                </ul>
+
+                <div class="pagelist"><span><a href="/courtweb/front/gzxxList/JD0-qbcx-up-2-#up"
+                                               id="up">上一页</a></span><span><a
+                        href="/courtweb/front/gzxxList/JD0-qbcx-down-2-#up" name="up" id="up">下一页</a></span><span>共 22699 条纪录</span><span>第 <strong>2</strong>页</span>
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumbs"></div>
+    </div>
+</div>
+
+
+<!-- 脚注内容 -->
+<div class="breadcrumbs"></div>
+<div class="footer">
+    <p>版权所有：惠州市中级人民法院 Copyright @ 2006-2014 All Rights Reserved.</p>
+    <p>版权所有 ： 未经书面协议授权，禁止下载试用或建立镜像</p>
+    <p>ICP备案号：粤ICP备06101287号 经营许可证证书</p>
+    <p>技术支持：广州昊达信息科技有限公司</p>
+</div>
+<script src="/courtweb/front/sfgk_hz/js/superslide.2.1.js"></script>
+<script>
+    jQuery(".slideTxtBox").slide({effect: "fold", autoPlay: true, easing: "easeOutCirc", delayTime: 200});
+</script>
+</body>
+</html>

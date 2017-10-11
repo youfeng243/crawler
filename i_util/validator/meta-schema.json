@@ -1,0 +1,37 @@
+{
+    "type": "object",
+    "definitions": {
+        "datetime_str" : {
+            "type": "string",
+            "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
+        }
+    },
+    "properties": {
+        "_record_id": {
+            "type":"string",
+            "description": "记录ID，由多个数据字段md5生成"
+        },
+        "_src": {
+            "type":"array",
+            "description": "来源",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "download_time": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "_in_time": {
+            "description": "入库时间",
+            "$ref": "#/definitions/datetime_str"
+        },
+        "_utime": {
+            "title": "最后更新时间",
+            "$ref": "#/definitions/datetime_str"
+        }
+    },
+    "required": ["_record_id", "_in_time", "_utime", "_src"],
+    "additionalProperties": true
+}

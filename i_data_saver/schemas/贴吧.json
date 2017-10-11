@@ -1,0 +1,54 @@
+{
+    "type": "object",
+    "title": "贴吧",
+    "properties": {
+        "publish_time": {
+            "type": "string",
+            "title": "发布时间"
+        },
+        "tag_info": {
+            "type": "object",
+            "title": "标签信息"
+        },
+        "original_id": {
+            "type": "string",
+            "title": "源表中的ID"
+        },
+        "original_collection": {
+            "type": "string",
+            "title": "源表"
+        },
+        "forum_href": {
+            "type": "string",
+            "title": "论坛链接"
+        },
+        "keyword": {
+            "type": "string",
+            "title": "关键字"
+        },
+        "forum": {
+            "type": "string",
+            "title": "论坛"
+        },
+        "author": {
+            "type": "string",
+            "title": "作者"
+        },
+        "sentiment": {
+            "type": "string",
+            "title": "情感类型"
+        },
+        "title": {
+            "type": "string",
+            "title": "标题"
+        },
+        "content": {
+            "type": "string",
+            "title": "内容"
+        },
+        "has_merged": {
+            "type": "boolean",
+            "title": "是否整合"
+        }
+    }
+}

@@ -1,0 +1,58 @@
+{
+    "type": "object",
+    "title": "法院公告",
+    "properties": {
+        "bulletin_date": {
+            "type": "string",
+            "title": "公告日期"
+        },
+        "defendants": {
+            "type": "array",
+            "title": "被告list"
+        },
+        "case_cause": {
+            "type": "string",
+            "title": "案由"
+        },
+        "court": {
+            "type": "string",
+            "title": "法庭"
+        },
+        "case_id": {
+            "type": "string",
+            "title": "案号"
+        },
+        "province": {
+            "type": "string",
+            "title": "省份"
+        },
+        "entity_list": {
+            "type": "array",
+            "title": "实体list"
+        },
+        "norm_bulletin_content": {
+            "type": "string",
+            "title": "规范公告内容"
+        },
+        "litigants": {
+            "type": "array",
+            "title": "当事人list"
+        },
+        "bulletin_content": {
+            "type": "string",
+            "title": "公告内容"
+        },
+        "bulletin_type": {
+            "type": "string",
+            "title": "公告类型"
+        },
+        "pdf": {
+            "type": "string",
+            "title": "PDF下载链接"
+        },
+        "plaintiffs": {
+            "type": "array",
+            "title": "原告list"
+        }
+    }
+}

@@ -1,0 +1,79 @@
+上海一诺银华投资股份有限公司西藏分公司 missing src_registered_capital
+中国电信集团公司吉隆口岸电信局 missing src_registered_capital
+中国葛洲坝集团第五工程有限公司西藏分公司 missing src_registered_capital
+后藏青稞酒茶馆 missing src_registered_capital, period
+四川中鼎远发建设集团有限公司西藏分公司 missing src_registered_capital
+四川省亚辉建筑安装工程有限公司西藏分公司 missing src_registered_capital
+四川省安岳县宏达建筑工程公司昌都分公司 missing src_registered_capital
+四川省泸县建筑安装工程总公司西藏分公司 missing src_registered_capital
+地平线广告 missing src_registered_capital, period
+天津市亚安科技有限公司拉萨分公司 missing src_registered_capital
+奇圣土特产品展示中心 missing src_registered_capital, period
+成都交大工程建设集团有限公司西藏分公司 missing src_registered_capital
+拉萨市城关区哈达（集团）有限公司建筑装饰分公司 missing src_registered_capital
+拉萨星宇通讯器材有限公司林廓北路营业厅 missing src_registered_capital
+拉萨金牛冶炼厂 missing src_registered_capital
+江阳建设集团有限公司西藏分公司 missing src_registered_capital
+河北圣基建设工程集团有限公司西藏分公司 missing src_registered_capital
+海银财富管理有限公司拉萨分公司 missing src_registered_capital
+英祺通讯 missing src_registered_capital, period
+藏绒王羊绒制品 missing src_registered_capital, period
+西藏圣宝总公司建筑安装工程公司 missing src_registered_capital
+西藏山南市饲料加工厂 missing src_registered_capital
+西藏林芝奇正藏药厂 missing src_registered_capital
+西藏藏游旅游开发有限公司吉隆分公司 missing src_registered_capital
+西藏通泽实业有限公司世纪村食府 missing src_registered_capital
+西部中大建设集团股份有限公司西藏分公司 missing src_registered_capital
+达孜县中乾投资管理合伙企业（有限合伙） missing src_registered_capital, address
+达孜县中融鼎盛投资中心（有限合伙） missing src_registered_capital, address
+达孜县玉雄建筑安装有限公司桑珠林采砂场分公司 missing src_registered_capital
+达孜县玉雄建筑安装有限公司玉雄商品混凝土分公司 missing src_registered_capital
+达孜县达令丽人投资中心（有限合伙） missing src_registered_capital, address
+达孜县达心佳人投资中心（有限合伙） missing src_registered_capital, address
+达孜县达艺潮人投资中心（有限合伙） missing src_registered_capital, address
+陕西亿金建设有限公司西藏分公司 missing src_registered_capital
+陕西建工第六建设集团有限公司西藏分公司 missing src_registered_capital
+
+
+## RESULT ##
+
+
+上海一诺银华投资股份有限公司西藏分公司 missing src_registered_capital
+中国电信集团公司吉隆口岸电信局 missing src_registered_capital
+中国葛洲坝集团第五工程有限公司西藏分公司 missing src_registered_capital
+后藏青稞酒茶馆 missing src_registered_capital, period
+四川中鼎远发建设集团有限公司西藏分公司 missing src_registered_capital
+四川省亚辉建筑安装工程有限公司西藏分公司 missing src_registered_capital
+四川省安岳县宏达建筑工程公司昌都分公司 missing src_registered_capital
+四川省泸县建筑安装工程总公司西藏分公司 missing src_registered_capital
+地平线广告 missing src_registered_capital, period
+天津市亚安科技有限公司拉萨分公司 missing src_registered_capital
+奇圣土特产品展示中心 missing src_registered_capital, period
+成都交大工程建设集团有限公司西藏分公司 missing src_registered_capital
+拉萨市城关区哈达（集团）有限公司建筑装饰分公司 missing src_registered_capital
+拉萨星宇通讯器材有限公司林廓北路营业厅 missing src_registered_capital
+拉萨金牛冶炼厂 missing src_registered_capital
+江阳建设集团有限公司西藏分公司 missing src_registered_capital
+河北圣基建设工程集团有限公司西藏分公司 missing src_registered_capital
+海银财富管理有限公司拉萨分公司 missing src_registered_capital
+英祺通讯 missing src_registered_capital, period
+藏绒王羊绒制品 missing src_registered_capital, period
+西藏圣宝总公司建筑安装工程公司 missing src_registered_capital
+西藏山南市饲料加工厂 missing src_registered_capital
+西藏林芝奇正藏药厂 missing src_registered_capital
+西藏藏游旅游开发有限公司吉隆分公司 missing src_registered_capital
+西藏通泽实业有限公司世纪村食府 missing src_registered_capital
+西部中大建设集团股份有限公司西藏分公司 missing src_registered_capital
+达孜县中乾投资管理合伙企业（有限合伙） missing src_registered_capital, address
+达孜县中融鼎盛投资中心（有限合伙） missing src_registered_capital, address
+达孜县玉雄建筑安装有限公司桑珠林采砂场分公司 missing src_registered_capital
+达孜县玉雄建筑安装有限公司玉雄商品混凝土分公司 missing src_registered_capital
+达孜县达令丽人投资中心（有限合伙） missing src_registered_capital, address
+达孜县达心佳人投资中心（有限合伙） missing src_registered_capital, address
+达孜县达艺潮人投资中心（有限合伙） missing src_registered_capital, address
+陕西亿金建设有限公司西藏分公司 missing src_registered_capital
+陕西建工第六建设集团有限公司西藏分公司 missing src_registered_capital
+35 companies not passed in 565 companies
+(u'src_registered_capital', 35)
+(u'period', 5)
+(u'address', 5)

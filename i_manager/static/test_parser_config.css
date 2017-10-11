@@ -1,0 +1,30 @@
+.loading{
+    position: fixed;
+    width:100%;
+    height: 100%;
+    top:0;
+    bottom:0;
+    right: 0;
+    left: 0;
+    line-height:56px;
+    color:#fff;
+    padding-left:60px;
+    font-size:15px;
+    background: #000 url(/static/images/loading.gif) no-repeat center center;
+    opacity: 0.3;
+    z-index:9999;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=30);
+}
+.vertical-item{
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+.input-page-text{
+    width:100%;
+    height: 100%;
+    resize: none;
+}
+.normal-modal{
+    width:100%;
+    height: 100%;
+}

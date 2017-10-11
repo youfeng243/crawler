@@ -1,0 +1,74 @@
+{
+    "type": "object",
+    "title": "招标信息",
+    "properties": {
+        "province": {
+            "type": "string",
+            "title": "省份"
+        },
+        "public_bid_company": {
+            "type": "string",
+            "title": "招标公司"
+        },
+        "win_bid_company": {
+            "type": "string",
+            "title": "中标公司"
+        },
+        "publish_time": {
+            "type": "string",
+            "title": "发布日期"
+        },
+        "market_share": {
+            "type": "string",
+            "title": "市场份额"
+        },
+        "bid_name": {
+            "type": "string",
+            "title": "标名称"
+        },
+        "bid_id": {
+            "type": "string",
+            "title": "标ID"
+        },
+        "agent": {
+            "type": "string",
+            "title": "招标代理机构"
+        },
+        "bid_date": {
+            "type": "string",
+            "title": "标日期"
+        },
+        "aim_company_relation": {
+            "type": "string",
+            "title": "与目标公司的关系"
+        },
+        "bid_content": {
+            "type": "string",
+            "title": "标的正文"
+        },
+        "bid_budget": {
+            "type": "number",
+            "title": "招标文件售价"
+        },
+        "city": {
+            "type": "string",
+            "title": "所属城市"
+        },
+        "bid_type": {
+            "type": "string",
+            "title": "投标还是中标"
+        },
+        "original_url": {
+            "type": "string",
+            "title": "原始URL"
+        },
+        "aim_company": {
+            "type": "string",
+            "title": "目标公司"
+        },
+        "bid_industry": {
+            "type": "string",
+            "title": "标所属的行业"
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "type": "object",
+    "title": "上市公告信息",
+    "properties": {
+        "code": {
+            "type": "string",
+            "title": "股票代码"
+        },
+        "abstract": {
+            "type": "string",
+            "title": "公告摘要"
+        },
+        "publish_time": {
+            "type": "string",
+            "title": "发布日期"
+        },
+        "notice_id": {
+            "type": "string",
+            "title": "公告号"
+        },
+        "company": {
+            "type": "string",
+            "title": "企业名称"
+        },
+        "content": {
+            "type": "string",
+            "title": "内容"
+        },
+        "type": {
+            "type": "string",
+            "title": "公告类型"
+        }
+    }
+}

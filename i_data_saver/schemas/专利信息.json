@@ -1,0 +1,86 @@
+{
+    "type": "object",
+    "title": "专利信息",
+    "properties": {
+        "category": {
+            "type": "string",
+            "title": "分类号"
+        },
+        "agents": {
+            "type": "array",
+            "title": "代理人"
+        },
+        "patent_type": {
+            "type": "string",
+            "title": "专利类型"
+        },
+        "agent_org": {
+            "type": "string",
+            "title": "专利代理机构"
+        },
+        "abstract": {
+            "type": "string",
+            "title": "专利摘要"
+        },
+        "publish_date": {
+            "type": "string",
+            "title": "发布日期"
+        },
+        "address": {
+            "type": "string",
+            "title": "地址"
+        },
+        "pct_sub_data": {
+            "type": "string",
+            "title": "PCT申请数据"
+        },
+        "publish_no": {
+            "type": "string",
+            "title": "申请公布号"
+        },
+        "title": {
+            "type": "string",
+            "title": "标题"
+        },
+        "submit_date": {
+            "type": "string",
+            "title": "申请日"
+        },
+        "query_info": {
+            "type": "string",
+            "title": "专利申请公布日"
+        },
+        "patent_id": {
+            "type": "string",
+            "title": "专利号"
+        },
+        "pct_enter_date": {
+            "type": "string",
+            "title": "PCT进入国家阶段日"
+        },
+        "agent_org_id": {
+            "type": "string",
+            "title": "专利代理机构ID"
+        },
+        "pct_pub_data": {
+            "type": "string",
+            "title": "PCT公布数据"
+        },
+        "submit_id": {
+            "type": "string",
+            "title": "申请号"
+        },
+        "submitter": {
+            "type": "string",
+            "title": "申请人"
+        },
+        "prorioty": {
+            "type": "string",
+            "title": "优先级"
+        },
+        "inventors": {
+            "type": "array",
+            "title": "发明人列表"
+        }
+    }
+}

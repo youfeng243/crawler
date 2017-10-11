@@ -1,0 +1,45 @@
+STATISTICS_COLLECTION_NAME = '__STATISTICS__'
+
+[beanstalk_conf]
+host                        = '127.0.0.1'  # 线上beanstalk内网IP
+port                        = 11300      # 线上beanstalk内网port
+input_tube                  = 'extract_info'
+output_tube                 = ['entity_info']
+
+# 分布式汇报数据库配置
+[backend]
+host           =   '127.0.0.1'
+port            =   6379
+password        =   "haizhi@)"
+
+[server]
+name = 'single_src_merger'
+host = '127.0.0.1'
+port = 12800
+server_process_num = 1
+
+[MYSQL]
+host= '127.0.0.1'
+port= 3306
+username= 'work'
+password= 'haizhi@)'
+dbname= 'cmb_crawl'
+
+[db_backend]
+type = 'mongodb'
+
+[db_backend.hbase]
+host = 'localhost'
+port = 9090
+rest_port = 8080
+
+[db_backend.mongodb]
+host= '172.17.1.119'
+port= 40042
+db= 'single_src'
+username= 'work'
+password= 'haizhi'
+
+[logger]
+level = "info"
+console = true

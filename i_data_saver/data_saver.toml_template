@@ -1,0 +1,40 @@
+STATISTICS_COLLECTION_NAME = '__STATISTICS__'
+
+[beanstalk_conf]
+host = 'cs2'  # 线上beanstalk内网IP
+port = 11300      # 线上beanstalk内网port
+input_tube = 'final_data'
+output_tube = ''
+
+
+# 分布式汇报数据库配置
+[backend]
+host = 'cs0'
+port = 6379
+password = "haizhi@)"
+
+[server]
+name = 'datasaver'
+host = '127.0.0.1'
+port = 12601
+server_thread_num = 2
+server_process_num = 5
+process_thread_num = 4
+
+[MYSQL]
+host= 'rm-wz9x07x9567465305.mysql.rds.aliyuncs.com'
+port= 3306
+username= 'crawler'
+password= 'huXXp7u=D'
+dbname= 'crawler'
+
+[data_sink.mongodb]
+host= 'mongo3'
+port= 27017
+db= 'app_data'
+username= 'work'
+password= 'haizhi'
+
+[logger]
+level = "info"
+console = true

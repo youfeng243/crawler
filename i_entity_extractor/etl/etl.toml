@@ -1,0 +1,77 @@
+[mongo]
+host = 'Crawler-DataServer2'
+port = 40042
+db_name = 'final_data'
+username = 'work'
+passwd = 'haizhi'
+
+[topic2table]
+32 = 'judgement_wenshu'
+33 = 'bulletin'
+34 = 'court_ktgg'
+37 = 'judge_process'
+
+
+
+STATISTICS_COLLECTION_NAME = '__STATISTICS__'
+
+schema_error_db = true
+use_old_deploy = false
+
+[beanstalk_conf]
+host                        =   'cs1'  # 线上beanstalk内网IP
+port                        =   11300      # 线上beanstalk内网port
+input_tube                  =  'online_multi_src_output'
+output_tube                 =  ''
+
+# 分布式汇报数据库配置
+[backend]
+host           =   'cs0'
+port            =   6379
+password        =   "haizhi@)"
+
+[server]
+name = 'entity_extractor'
+host = '127.0.0.1'
+port = 12501
+server_process_num = 10
+
+
+[MYSQL]
+host= 'Crawler-DataServer1'
+port= 3306
+username= 'work'
+password= 'haizhi@)'
+dbname= 'cmb_crawl'
+
+
+[db_source.mongodb]
+host= 'mongo0'
+port= 40042
+db= 'final_data'
+username= 'work'
+password= 'haizhi'
+
+
+[data_sink.mongodb]
+host= '172.16.215.16'
+port= 40042
+db= 'app_data'
+username= 'work'
+password= 'haizhi'
+
+
+#used to store records with schema error
+
+
+[data_sink.mongodb_err]
+host= '172.16.215.16'
+port= 40042
+db= 'app_data_schema_err'
+username= 'work'
+password= 'haizhi'
+
+
+[logger]
+level = "info"
+console = false

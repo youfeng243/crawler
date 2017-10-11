@@ -1,0 +1,37 @@
+[server]
+name = 'crawler_merge'
+host = '127.0.0.1'
+port = 12400
+server_thread_num = 3
+server_process_num = 8
+process_thread_num = 1
+
+[webpage_db]
+host = "172.17.1.119"
+port = 40042
+db = "crawl_merge_webpage"
+username = "work"
+password = 'haizhi'
+
+[linkattr_db]
+host = "172.17.1.119"
+port = 40042
+db = "crawl_merge_linkattr"
+username = "work"
+password = 'haizhi'
+
+[backend]
+host            =   '127.0.0.1'  # 本地测试接口连接，线上提交时注意注销
+port            =   6379
+password        =   "haizhi@)"
+
+[logger]
+level = "info"
+console = false
+
+# beanstalk的配置
+[beanstalk_conf]
+host = '127.0.0.1'                 # 线上beanstalk内网IP
+port = 11300                            # 线上beanstalk内网port
+input_tube = 'extract_to_crawl'
+output_tube = 'scheduler_info'

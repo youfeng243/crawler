@@ -1,0 +1,106 @@
+{
+    "type": "object",
+    "title": "裁判文书",
+    "properties": {
+        "max_money": {
+            "type": "number",
+            "title": "最大金额"
+        },
+        "doc_content": {
+            "type": "string",
+            "title": "文书内容"
+        },
+        "case_date": {
+            "type": "string",
+            "title": "案件日期"
+        },
+        "case_name": {
+            "type": "string",
+            "title": "案件名称"
+        },
+        "has_parsed": {
+            "type": "boolean",
+            "title": "是否解析"
+        },
+        "court": {
+            "type": "string",
+            "title": "法院"
+        },
+        "bulletin_date": {
+            "type": "string",
+            "title": "公告时间"
+        },
+        "ref_ids": {
+            "type": "array",
+            "title": "文章中案件ID"
+        },
+        "case_type": {
+            "type": "string",
+            "title": "案件类型"
+        },
+        "case_id": {
+            "type": "string",
+            "title": "案件ID"
+        },
+        "all_money": {
+            "type": "number",
+            "title": "所有金额"
+        },
+        "has_merged": {
+            "type": "boolean",
+            "title": "是否整合"
+        },
+        "doc_id": {
+            "type": "string",
+            "title": "文书ID"
+        },
+        "html": {
+            "type": "string",
+            "title": "html源码"
+        },
+        "company_list": {
+            "type": "array",
+            "title": "公司列表"
+        },
+        "original_id": {
+            "type": "string",
+            "title": "原始表ID"
+        },
+        "plaintiff_info_list": {
+            "type": "array",
+            "title": "原告信息list"
+        },
+        "judge_date": {
+            "type": "string",
+            "title": "审判日期"
+        },
+        "judge_content": {
+            "type": "string",
+            "title": "审判结果"
+        },
+        "case_cause": {
+            "type": "string",
+            "title": "案由"
+        },
+        "judiciarys": {
+            "type": "array",
+            "title": "陪审团"
+        },
+        "procedure": {
+            "type": "string",
+            "title": "程序"
+        },
+        "chain_case_id": {
+            "type": "string",
+            "title": "关联案号"
+        },
+        "defendant_info_list": {
+            "type": "array",
+            "title": "被告信息list"
+        },
+        "province": {
+            "type": "string",
+            "title": "省份"
+        }
+    }
+}

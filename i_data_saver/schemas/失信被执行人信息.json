@@ -1,0 +1,70 @@
+{
+    "type": "object",
+    "title": "失信被执行人信息",
+    "properties": {
+        "duty": {
+            "type": "string",
+            "title": "义务"
+        },
+        "max_money": {
+            "type": "number",
+            "title": "最大金额"
+        },
+        "i_name": {
+            "type": "string",
+            "title": "失信被执行人主体"
+        },
+        "reg_date": {
+            "type": "string",
+            "title": "注册时间"
+        },
+        "publish_date": {
+            "type": "string",
+            "title": "发布日期"
+        },
+        "business_entity": {
+            "type": "string",
+            "title": "企业实体"
+        },
+        "province": {
+            "type": "string",
+            "title": "地域"
+        },
+        "sum_money": {
+            "type": "number",
+            "title": "总额"
+        },
+        "disrupt_type_name": {
+            "type": "string",
+            "title": "失信被执行人行为具体情形"
+        },
+        "case_id": {
+            "type": "string",
+            "title": "案件代码"
+        },
+        "party_type_name": {
+            "type": "string",
+            "title": ""
+        },
+        "court": {
+            "type": "string",
+            "title": "法院"
+        },
+        "registered_code": {
+            "type": "string",
+            "title": "注册号"
+        },
+        "performance": {
+            "type": "string",
+            "title": "履行情况"
+        },
+        "gist_unit": {
+            "type": "string",
+            "title": "执行法院"
+        },
+        "gist_id": {
+            "type": "string",
+            "title": "执行依据文号"
+        }
+    }
+}

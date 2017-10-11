@@ -1,0 +1,46 @@
+{
+    "type": "object",
+    "title": "新闻",
+    "properties": {
+        "has_parsed": {
+            "type": "boolean",
+            "title": "是否解析"
+        },
+        "publish_time": {
+            "type": "string",
+            "title": "发布日期"
+        },
+        "keyword": {
+            "type": "string",
+            "title": "关键字"
+        },
+        "tag_info": {
+            "type": "object",
+            "title": "标签信息"
+        },
+        "original_id": {
+            "type": "string",
+            "title": "源表中的ID"
+        },
+        "title": {
+            "type": "string",
+            "title": "标题"
+        },
+        "sentiment": {
+            "type": "string",
+            "title": "情感类型"
+        },
+        "author": {
+            "type": "string",
+            "title": "作者"
+        },
+        "summary": {
+            "type": "string",
+            "title": "概要"
+        },
+        "original_collection": {
+            "type": "string",
+            "title": "源表"
+        }
+    }
+}

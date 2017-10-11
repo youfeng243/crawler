@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>规则测试</title>
+    <link href="/static/third_party/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/test_parser_config.css" rel="stylesheet">
+    <script src="/static/third_party/jquery/jquery.min.js"></script>
+    <script src="/static/third_party/bootstrap/bootstrap.min.js"></script>
+    <script src="/static/third_party/vue.js" type="text/javascript" defer></script>
+    <script src="/static/test_parser_config.js" type="text/javascript" defer></script>
+</head>
+<body>
+<div id="testParserConfigPage" class="app container" style="margin-top: 20px;">
+    <div class="row vertical-item">
+        <div class="col-sm-2">
+            <div class="input-group">
+                <span class="input-group-addon">请求方式</span>
+                <select id="request-method" v-model="request_method" class="form-control fixed">
+                    <option value="post">
+                        POST
+                    </option>
+                    <option value="get">
+                        GET
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <span class="input-group-addon">请求URL</span>
+                <input type="text" class="form-control" v-model="request_url">
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <button class="form-control" @click="testParserConfig($event)">提交</button>
+        </div>
+    </div>
+    <div class="row vertical-item">
+        <div class="col-sm-10">
+            <div class="vertical-item">
+                <label>请求参数</label>
+                <textarea class="form-control" v-model="request_params" rows="6" style="resize: none"></textarea>
+            </div>
+            <div class="vertical-item">
+                <label>header</label>
+                <textarea class="form-control" v-model="headers" rows="6" style="resize: none"></textarea>
+            </div>
+        </div>
+        <!-- left-content-->
+        <div class="col-sm-2 vertical-item">
+            <label>其他配置</label>
+            <div class="vertical-item">
+                <div class="input-group">
+                    <span class="input-group-addon">页面来源</span>
+                    <select v-model="page_source" class="form-control">
+                        <option value="cache" selected>缓存</option>
+                        <option value="downloader">下载器</option>
+                        <option value="pagedb">网页库</option>
+                        <option value="input">手动输入</option>
+                    </select>
+                </div>
+            </div>
+            <div v-show='page_source == "input"' class="vertical-item">
+                <div class="input-group">
+                    <button class="btn default-btn" data-toggle="modal" data-target="#input-page">点击输入网页</button>
+                </div>
+            </div>
+            <div class="vertical-item">
+                <div class="input-group">
+                    <span class="input-group-addon">解析规则</span>
+                    <input type="text" class="form-control" v-model="parser_id">
+                </div>
+            </div>
+            <div class="vertical-item">
+                <div class="input-group">
+                    <span class="input-group-addon">下载方式</span>
+                    <select v-model="download_type" class="form-control">
+                        <option value="simple" selected>Simple</option>
+                        <option value="phantom">Phantom</option>
+                    </select>
+                </div>
+            </div>
+            <div class="vertical-item">
+                <div class="input-group">
+                    <span class="input-group-addon">是否结果入库</span>
+                    <select v-model="is_save" class="form-control">
+                        <option value="false" selected>否</option>
+                        <option value="true">是</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <label>
+                解析结果
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <ul id="resultShowTab" class="nav nav-tabs">
+                <li class="active">
+                    <a href="#response" data-toggle="tab">
+                        响应内容
+                    </a>
+                </li>
+                <li>
+                    <a href="#status" data-toggle="tab">
+                        抽取状态
+                    </a>
+                </li>
+                <li>
+                    <a href="#common_datas" data-toggle="tab">
+                        正文信息
+                    </a>
+                </li>
+                <li>
+                    <a href="#datas" data-toggle="tab">
+                        抽取数据
+                    </a>
+                </li>
+                <li>
+                    <a href="#entity_datas" data-toggle="tab">
+                        实体解析
+                    </a>
+                </li>
+                <li>
+                    <a href="#check_datas" data-toggle="tab">
+                        数据检查
+                    </a>
+                </li>
+                <li>
+                    <a href="#links" data-toggle="tab">
+                        抽取链接
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content col-sm-12">
+            <div class="tab-pane fade in active" id="response">
+                <pre>{{ test_result.response | json 4 }}</pre>
+            </div>
+            <div class="tab-pane fade" id="links">
+                <pre>{{ test_result.links | json 4 }}</pre>
+            </div>
+            <div class="tab-pane fade" id="status">
+                <pre>{{ test_result.status | json 4 }}</pre>
+            </div>
+            <div class="tab-pane fade" id="common_datas">
+                <h3 style="text-align:center">{{ test_result.common_datas.title }}</h3>
+                <h4 style="text-align: center">发布时间:{{ test_result.common_datas.public_time }}</h4>
+                <div contenteditable="false" style="white-space: pre-line;margin-bottom: 40px">{{ test_result.common_datas.content }}</div>
+            </div>
+            <div class="tab-pane fade" id="datas">
+                <pre>{{ test_result.datas | json 4 }}</pre>
+            </div>
+            <div class="tab-pane fade" id="entity_datas">
+                <pre>{{ test_result.entity_datas | json 4 }}</pre>
+            </div>
+            <div class="tab-pane fade" id="check_datas">
+                <pre>{{ test_result.check_datas | json 4 }}</pre>
+            </div>
+        </div>
+    </div>
+    <div class="loading" v-show="isLoading"></div>
+    <div class="modal fade" id="input-page" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="">
+        <div class="modal-content" style="width:800px;height:600px;margin:auto;margin-top: 100px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">请输入网页内容</h4>
+            </div>
+            <div class="modal-body" style="height: 75%;">
+                <textarea v-model="input_page" class="input-page-text"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+</div>
+</body>
+</html>

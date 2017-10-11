@@ -1,0 +1,59 @@
+{
+    "type": "object",
+    "title": "开庭公告",
+    "description": "",
+    "properties": {
+        "province": {
+            "type": "string",
+            "title": "省份"
+        },
+        "litigants": {
+            "type": "string",
+            "title": "诉讼当事人list"
+        },
+        "court_place": {
+            "type": "string",
+            "title": "开庭地点"
+        },
+        "is_cancel": {
+            "type": "string",
+            "title": "是否取消"
+        },
+        "bulletin_date": {
+            "type": "string",
+            "title": "公告时间"
+        },
+        "judge": {
+            "type": "string",
+            "title": "法官"
+        },
+        "court": {
+            "type": "string",
+            "title": "法院"
+        },
+        "court_time": {
+            "type": "string",
+            "title": "开庭时间"
+        },
+        "case_id": {
+            "type": "string",
+            "title": "案号"
+        },
+        "court_use": {
+            "type": "string",
+            "title": "法庭用途"
+        },
+        "plaintiffs": {
+            "type": "array",
+            "title": "原告"
+        },
+        "defendants": {
+            "type": "array",
+            "title": "被告"
+        },
+        "case_cause": {
+            "type": "string",
+            "title": "案由"
+        }
+    }
+}

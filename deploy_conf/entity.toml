@@ -1,0 +1,45 @@
+[server]
+name = 'entity_extractor'
+host = '127.0.0.1'
+port = 12500
+server_thread_num = 10
+server_process_num = 8
+process_thread_num = 1
+
+[extract_state]
+Extract_NotExtract = 1
+Extract_Success = 2
+Extract_Fail = 3
+
+[beanstalk_conf]
+host                        ='Crawler-Downloader2:Crawler-Downloader1'  # 线上beanstalk内网IP
+port                        =   11300      # 线上beanstalk内网port
+input_tube                  =  'entity_info'
+output_tube                 = 'final_data'
+
+
+[MYSQL]
+host= 'Crawler-DataServer1'
+port= 3306
+username= 'work'
+password= 'haizhi@)'
+dbname= 'cmb_crawl'
+
+
+[backend]
+host       =   'Crawler-DataServer2'  # 本地测试接口连接，线上提交时注意注销
+port       =   6379
+password   =   "haizhi@)"
+
+[task_collect_db]
+host            =   'Crawler-DataServer2'
+port            =   40042
+username        =   'work'
+password        =   'haizhi'
+db = "task_collect"
+collection = "entity_task"
+
+
+[logger]
+level = "info"
+console = false

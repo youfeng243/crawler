@@ -1,0 +1,62 @@
+{
+    "type": "object",
+    "title": "欠税信息",
+    "properties": {
+        "tax_authority": {
+            "type": "string",
+            "title": "税务局"
+        },
+        "province": {
+            "type": "string",
+            "title": "省份"
+        },
+        "legalman": {
+            "type": "string",
+            "title": "法人代表"
+        },
+        "company": {
+            "type": "string",
+            "title": "公司名称"
+        },
+        "bulletin_date": {
+            "type": "string",
+            "title": "公告日期"
+        },
+        "taxpayer_name": {
+            "type": "string",
+            "title": "纳税人名称"
+        },
+        "tax_item": {
+            "type": "string",
+            "title": "稅类型"
+        },
+        "owing_tax_cur_period": {
+            "type": "string",
+            "title": "当期新欠金额"
+        },
+        "owing_tax": {
+            "type": "number",
+            "title": "欠税金额"
+        },
+        "taxpayer_id": {
+            "type": "string",
+            "title": "纳税人ID"
+        },
+        "legal_man_id": {
+            "type": "string",
+            "title": "法人ID"
+        },
+        "business_address": {
+            "type": "string",
+            "title": "经营地址"
+        },
+        "owing_date": {
+            "type": "string",
+            "title": "欠税日期"
+        },
+        "ori_owing_date": {
+            "type": "string",
+            "title": "原始欠税日期"
+        }
+    }
+}

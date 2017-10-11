@@ -1,0 +1,42 @@
+STATISTICS_COLLECTION_NAME = '__STATISTICS__'
+
+[beanstalk_conf]
+host                        ='Crawler-Downloader2:Crawler-Downloader1'  # 线上beanstalk内网IP
+port                        =   11300      # 线上beanstalk内网port
+input_tube                  =  'final_data'
+output_tube                 = ''
+
+
+# 分布式汇报数据库配置
+[backend]
+host           =  'Crawler-DataServer2'
+port            =   6379
+password        =   "haizhi@)"
+
+[server]
+name = 'datasaver'
+host = '127.0.0.1'
+port = 12600
+server_thread_num = 2
+server_process_num = 8
+process_thread_num = 4
+
+
+
+[MYSQL]
+host= 'Crawler-DataServer1'
+port= 3306
+username= 'work'
+password= 'haizhi@)'
+dbname= 'cmb_crawl'
+
+[data_sink.mongodb]
+host= 'Crawler-DataServer2'
+port= 40042
+db= 'final_data'
+username= 'work'
+password= 'haizhi'
+
+[logger]
+level = "info"
+console = false

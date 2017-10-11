@@ -1,0 +1,35 @@
+parser_config_database = "mysql://work:haizhi@)@127.0.0.1:3306/cmb_crawl?charset=utf8"
+
+[server]
+name = 'extractor'
+host = '127.0.0.1'
+port = 12300
+server_thread_num = 3
+server_process_num = 8
+process_thread_num = 1
+
+
+[backend]
+host           =   '127.0.0.1'  # 本地测试接口连接，线上提交时注意注销
+port            =   6379
+password        =   "haizhi@)"
+
+
+[beanstalk_conf]
+host            =   '127.0.0.1'  # 线上beanstalk内网IP
+port            =    11300       # 线上beanstalk内网port
+input_tube      =   "download_rsp"      #'download_rsp'
+output_tube     = ['extract_info', 'extract_to_crawl']
+
+
+[task_collect_db]
+host            =   '172.17.1.119'
+port            =   40042
+username        =   'work'
+password        =   'haizhi'
+db = "task_collect"
+collection = "extract_task"
+
+[logger]
+level = "info"
+console = false

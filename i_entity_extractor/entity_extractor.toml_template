@@ -1,0 +1,70 @@
+STATISTICS_COLLECTION_NAME = '__STATISTICS__'
+
+schema_error_db = false
+use_old_deploy = false
+
+[beanstalk_conf]
+host                        =   'cs2'  # 线上beanstalk内网IP
+port                        =   11300      # 线上beanstalk内网port
+input_tube                  =  'entity_info'
+output_tube                 =  'final_data'
+
+# 分布式汇报数据库配置
+[backend]
+host           =   '127.0.0.1'
+port            =   6379
+password        =   "haizhi@)"
+
+[server]
+name = 'entity_extractor_new'
+host = '127.0.0.1'
+port = 12801
+server_process_num = 1
+
+
+[MYSQL]
+host= '127.0.0.1'
+port= 13306
+username= 'root'
+password= 'haizhi@)'
+dbname= 'crawler'
+
+
+
+[db_source.mongodb]
+host= '127.0.0.1'
+port= 27017
+db= 'final_data_old'
+username= ''
+password= ''
+
+[task_collect_db]
+host            =   'mongo0'
+port            =   40042
+username        =   'work'
+password        =   'haizhi'
+db = "task_collect"
+collection = "entity_task"
+
+[data_sink.mongodb]
+host= '127.0.0.1'
+port= 27017
+db= 'app_data_succ'
+username= ''
+password= ''
+
+
+#used to store records with schema error
+
+
+[data_sink.mongodb_err]
+host= '127.0.0.1'
+port= 27017
+db= 'app_data_schema_errt'
+username= ''
+password= ''
+
+
+[logger]
+level = "debug"
+console = true

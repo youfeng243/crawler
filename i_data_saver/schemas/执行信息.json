@@ -1,0 +1,38 @@
+{
+    "type": "object",
+    "title": "执行信息",
+    "properties": {
+        "exec_money": { 
+            "type": "integer",
+            "title": "执行金额"
+        },
+        "province": { 
+            "type": "string",
+            "title": "省份"
+        },
+        "case_state": { 
+            "type": "string",
+            "title": "案件状态"
+        },
+        "case_id": { 
+            "type": "string",
+            "title": "案号"
+        },
+        "court": { 
+            "type": "string",
+            "title": "法院"
+        },
+        "case_date": { 
+            "type": "string",
+            "title": "立案时间"
+        },
+        "i_name": { 
+            "type": "string",
+            "title": "被执行人姓名/名称"
+        },
+        "party_card_num": { 
+            "type": "string",
+            "title": "身份证号码/组织机构代码"
+        }
+    }
+}
