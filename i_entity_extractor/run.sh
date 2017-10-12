@@ -6,7 +6,7 @@ Prog=python
 FileDir="$CRAWLER_PATH/i_entity_extractor/"
 cd $FileDir
 start() {
-	nohup $Prog server.py -f $1 2>&1>server.err &
+	nohup $Prog server.py -f 'entity_extractor.toml' 2>&1>server.err &
 	sleep 1
 	if [ -f "server.pid" ]; then
 	    echo "start success"

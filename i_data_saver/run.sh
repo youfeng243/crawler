@@ -6,7 +6,7 @@ Prog=python
 FileDir="$CRAWLER_PATH/i_data_saver/"
 cd $FileDir
 start() {
-	nohup $Prog server.py -f $1 2>&1>server.err &
+	nohup $Prog server.py -f 'data_saver.toml' 2>&1>server.err &
     COUNTER=0
 	while [ $COUNTER -lt 5 ]
 	do

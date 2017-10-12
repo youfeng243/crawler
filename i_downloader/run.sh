@@ -6,7 +6,7 @@ Prog=python
 FileDir="$CRAWLER_PATH/i_downloader/"
 cd $FileDir
 start() {
-	nohup $Prog server.py -f $1 &>server.err &
+	nohup $Prog server.py -f 'downloader.toml' &>server.err &
 	sleep 1
 }
 

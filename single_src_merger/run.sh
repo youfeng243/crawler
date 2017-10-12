@@ -6,7 +6,7 @@ Prog=python
 FileDir="$CRAWLER_PATH/single_src_merger/"
 cd $FileDir
 start() {
-	nohup $Prog server.py -f $1 2>&1>server.err &
+	nohup $Prog server.py -f 'single_src_merge.toml' 2>&1>server.err &
     COUNTER=0
 	while [ $COUNTER -lt 5 ]
 	do
