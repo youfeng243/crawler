@@ -58,6 +58,10 @@ class ConvertProccessor(object):
                 pass
             base_crawl_info = dict(extractor_crawl_info.__dict__)
             base_crawl_info.update(scheduler_obj)
+
+            if base_crawl_info.get("status_code") != 0:
+                return None
+
             link_merge = LinkMerge(self.link_connection, url_info, extract_info.links, self.log)
             link_attr = link_merge.merge_link_attr(base_info,
                                                    extract_info,

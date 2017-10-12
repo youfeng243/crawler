@@ -41,7 +41,7 @@ class SMThriftHandler(object):
             data = singletons[SingleSourceMerger.__name__].reload(topic_id)
             self.worker_pool.reload_all(topic_id)
             self.log.info("finish reload topic_id[%s]" % topic_id)
-            msg  = "finish reload topic_id[%s]" % topic_id
+            msg = "finish reload topic_id[%s]" % topic_id
         except:
             self.log.error("reload fail reason[%s]" % traceback.format_exc())
             msg = "reload fail reason[%s]" % traceback.format_exc()
@@ -63,7 +63,8 @@ def exit_isr(a, b):
     else:
         log.debug("main proc : thread pool is not in running state")
 
-    # sys.exit(0)
+        # sys.exit(0)
+
 
 # sys.argv.extend('-f server1.toml'.split())
 

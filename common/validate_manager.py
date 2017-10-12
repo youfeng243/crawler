@@ -58,7 +58,7 @@ class ValidateManager(object):
         except ValidateError, e:
             if soft_validating:
                 doc[MetaFields.HAS_SCHEMA_ERROR] = True
-                doc[MetaFields.SCHEMA_ERROR_DETAIL] =e.message
+                doc[MetaFields.SCHEMA_ERROR_DETAIL] = "{}".format(e.message)
             else:
                 raise
 

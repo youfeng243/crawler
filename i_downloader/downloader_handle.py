@@ -28,10 +28,12 @@ class DownloadHandler(object):
             self.log.error(info)
 
     def download(self, request):
-        self.log.info("start_crawl\turl::%s\tmethod:%s\tdownload_type:%s"%(request.url,request.method,request.download_type))
+        self.log.info(
+            "start_crawl\turl::%s\tmethod:%s\tdownload_type:%s" % (request.url, request.method, request.download_type))
         start = time.time()
+        response = DownLoadRsp(status=CrawlStatus.CRAWL_FAILT, )
         try:
-            if request.retry_times == None:
+            if request.retry_times is None:
                 retry_times = self.conf.get('default_request_kwargs')['retry_times']
             else:
                 retry_times = request.retry_times
@@ -47,13 +49,14 @@ class DownloadHandler(object):
                     break
                 time.sleep(3)
         except Exception as e:
-            self.log.error('url:'+request.url+'\terror_msg:'+str(traceback.format_exc()))
-            response = DownLoadRsp(status=CrawlStatus.CRAWL_FAILT, )
+            self.log.error('url:' + request.url + '\terror_msg:' + str(traceback.format_exc()))
         finally:
             content_len = -1
             if response.content:
                 content_len = len(response.content)
-            self.log.info('finish_crawl\tuse_time:'+str(time.time()-start)+'\tlens:'+str(content_len)+'\tstatus:'+str(response.status)+'\turl:'+str(request.url) )
+            self.log.info(
+                'finish_crawl\tuse_time:' + str(time.time() - start) + '\tlens:' + str(content_len) + '\tstatus:' + str(
+                    response.status) + '\turl:' + str(request.url))
         return response
 
     def stop(self):

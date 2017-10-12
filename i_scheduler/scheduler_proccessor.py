@@ -45,31 +45,31 @@ class SchedulerProccessor(NormalProccessor):
 
 
 
-def usage():
-    pass
-
-
-def test(conf):
-    processor = SchedulerProccessor(conf['log'], 1)
-    print processor.do_task("test")
-
-if __name__ == '__main__':
-    try:
-        file_path = './scheduler.toml'
-        opt, args = getopt.getopt(sys.argv[1:], 'f:', ['help'])
-        for name, value in opt:
-            if name == "-f":
-                file_path = value
-            elif name in ("-h", "--help"):
-                usage()
-                sys.exit()
-            else:
-                assert False, "unhandled option"
-
-        with open(file_path, 'rb') as config:
-            conf = pytoml.load(config)
-            conf['log']=LogHandler(conf['server']['name']+str(conf['server']['port']))
-        test(conf)
-
-    except getopt.GetoptError:
-        sys.exit()
+# def usage():
+#     pass
+#
+#
+# def test(conf):
+#     processor = SchedulerProccessor(conf['log'], 1)
+#     print processor.do_task("test")
+#
+# if __name__ == '__main__':
+#     try:
+#         file_path = './scheduler.toml'
+#         opt, args = getopt.getopt(sys.argv[1:], 'f:', ['help'])
+#         for name, value in opt:
+#             if name == "-f":
+#                 file_path = value
+#             elif name in ("-h", "--help"):
+#                 usage()
+#                 sys.exit()
+#             else:
+#                 assert False, "unhandled option"
+#
+#         with open(file_path, 'rb') as config:
+#             conf = pytoml.load(config)
+#             conf['log']=LogHandler(conf['server']['name']+str(conf['server']['port']))
+#         test(conf)
+#
+#     except getopt.GetoptError:
+#         sys.exit()

@@ -153,6 +153,10 @@ class EntityExtractor(object):
                     num_extract_data, traceback.format_exc())
                     resp["CODE"] = -10000
 
+        if resp["CODE"] == 10000:
+            self.log.info("haizhi- url = {} topic_id = {} 实体解析成功!".format(base_info.url, topic_id))
+        else:
+            self.log.error("haizhi- url = {} topic_id = {} 实体解析失败!".format(base_info.url, topic_id))
 
         end_time = time.time()
         self.log.info("finish_entity_extract\turl:%s\ttopic_id:%s\ttimecost:%.2f" % (base_info.url, topic_id, (end_time - begin_time) * 1000))

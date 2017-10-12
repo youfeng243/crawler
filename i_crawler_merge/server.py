@@ -51,7 +51,7 @@ class CrawlerMergeHandler(object):
             else:
                 self.beanstalk.put(self.conf.get('beanstalk_conf').get('output_tube'), self.to_string(link_attr))
         except Exception, e:
-            self.log.error("put msg from:{0}\tresult:{1}".format(self.conf.get('beanstalk_conf').get('output_tube'), str(e)))
+            self.log.error("haizhi-put msg from:{0}\tresult:{1}".format(self.conf.get('beanstalk_conf').get('output_tube'), str(e)))
         return link_attr
 
     # 每5条发送数据到队列
@@ -70,6 +70,7 @@ class CrawlerMergeHandler(object):
             results = self.select_handler.select_webpage(site, url_format, mod, start + i * mod,extra_filter)
             for result in results:
                 self.beanstalk.put(tube_name, self.to_string(result))
+                self.log.info("haizhi-成功保存{}".format(self.to_string(result)))
             if len(results) != mod:
                 break
 

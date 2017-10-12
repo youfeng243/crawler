@@ -11,7 +11,7 @@ from pymongo.errors import DuplicateKeyError
 
 from common.validate_manager import ValidateManager
 from i_data_saver.data_statistic import DataStatistics
-from i_util.global_defs import MetaFields
+from i_util.global_defs import MetaFields, DOWNLOAD_TIME
 from i_util.tools import get_record_id_new
 from bdp.i_crawler.i_data_saver.ttypes import DataSaverRsp
 
@@ -54,16 +54,26 @@ class MongoUpdator(object):
                 merged_doc[k] = v
                 doc_change_flag = True
         if doc_change_flag:
-            if MetaFields.SRC in existed_doc and MetaFields.SRC in doc:
-                srcs = existed_doc[MetaFields.SRC]
+            if MetaFields.SRC in merged_doc and MetaFields.SRC in doc:
+                src_list = merged_doc[MetaFields.SRC]
                 src_existed = False
-                for src in srcs:
+                for src in src_list:
                     if doc[MetaFields.SRC][0][MetaFields.SITE] == src[MetaFields.SITE]:
                         src_existed = True
+                        src[DOWNLOAD_TIME] = int(time.time())
+                        break
+
                 if not src_existed:
-                    merged_doc[MetaFields.SRC].extend(existed_doc[MetaFields.SRC])
+                    # 更新下最新下载时间，便于知道是何时入库的
+                    doc[MetaFields.SRC][0][DOWNLOAD_TIME] = int(time.time())
+                    merged_doc[MetaFields.SRC].extend(doc[MetaFields.SRC])
             else:
-                merged_doc[MetaFields.SRC] = existed_doc.get(MetaFields.SRC, [])
+                # 如果doc里面有src 则合并
+                src_list = doc.get(MetaFields.SRC, [])
+                if isinstance(src_list, list) and len(src_list) > 0:
+                    src_list[0][DOWNLOAD_TIME] = int(time.time())
+                    merged_doc[MetaFields.SRC] = src_list
+
         return merged_doc, doc_change_flag
 
     #TODO 将入库切出,增加多源融
@@ -141,7 +151,7 @@ class DataSaver(object):
         self.topic_manager = TopicManager(conf)
         self.logger = log
         self.validate_manager = ValidateManager(self.topic_manager, conf, 'all')
-        self.data_sink =  MongoUpdator(conf['data_sink']['mongodb'], self.topic_manager.get_table_names())
+        self.data_sink = MongoUpdator(conf['data_sink']['mongodb'], self.topic_manager.get_table_names())
         ds_conf = copy.deepcopy(conf['data_sink']['mongodb'])
         ds_conf['collection'] = "__STATISTICS__"
         self.data_stastics = DataStatistics(ds_conf)
@@ -150,7 +160,8 @@ class DataSaver(object):
     def check_data(self, j, save=False):
         topic_id = j['topic_id']
         data = j['data']
-        self.logger.info("check topic_id:{}, record_id:{}".format(topic_id, data.get("_record_id")))
+        self.logger.info(
+            "haizhi-check{} topic_id:{}, record_id:{}".format(data['_src'][0]['url'], topic_id, data.get("_record_id")))
         for k in data.keys():
             if k.startswith("_") and k not in MetaFields.ALLOW_META_FIELDS:
                 data.pop(k)
@@ -170,6 +181,7 @@ class DataSaver(object):
         if save:
             if MetaFields.HAS_SCHEMA_ERROR in data:
                 self.data_stastics.inc_failure(topic_id)
+                self.logger.error("haizhi- url = {} schema错误".format(data['_src'][0]['url']))
             else:
                 table_name = self.topic_manager.get_table_name_by_id(topic_id)
                 update_doc, change_flag = self.data_sink.merge(table_name, data)
@@ -179,11 +191,20 @@ class DataSaver(object):
                     rets = self.data_sink.sink(table_name, update_doc=update_doc)
                     if rets == 0:
                         self.data_stastics.inc_success_insert(topic_id)
+                        self.logger.info("haizhi- url = {} 插入操作,标识为{}".format(data['_src'][0]['url'],
+                                                                              update_doc[MetaFields.RECORD_ID]))
                     elif rets > 0:
                         self.data_stastics.inc_success_update(topic_id)
+                        self.logger.info("haizhi- url = {} 更新操作,标识符为{}".format(data['_src'][0]['url'],
+                                                                               update_doc[MetaFields.RECORD_ID]))
                     else:
                         self.data_stastics.inc_failure(topic_id)
-                    self.logger.info("Sink topic_id:{}, record_id:{}, result:{}".format(topic_id, update_doc[MetaFields.RECORD_ID], rets))
+                        self.logger.info("haizhi- url = {} 数据库操作失败".format(data['_src'][0]['url']))
+                    self.logger.info(
+                        "haizhi-{}数据更新Sink topic_id:{}, record_id:{}, result:{}".format(data['_src'][0]['url'],
+                                                                                        topic_id, update_doc[
+                                                                                            MetaFields.RECORD_ID],
+                                                                                        rets))
                 else:
                     self.logger.info("Skip sink topic_id:{}, record_id:{}, data has no change!".format(topic_id, update_doc[MetaFields.RECORD_ID]))
         return DataSaverRsp(status=0, message=None, data=json.dumps(data))
@@ -207,13 +228,13 @@ class DataSaver(object):
         try:
             schema_data = self.topic_manager.topic_dict[topic_id]['schema']
             return DataSaverRsp(
-                    status = 0,
-                    message = 'OK',
-                    data = schema_data.encode('utf8')
-                )
+                status=0,
+                message='OK',
+                data=schema_data.encode('utf8')
+            )
         except Exception, e:
             return DataSaverRsp(
-                    status = 1,
-                    message = repr(e),
-                    data = None
-                )
+                status=1,
+                message=repr(e),
+                data=None
+            )

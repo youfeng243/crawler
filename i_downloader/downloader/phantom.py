@@ -82,7 +82,7 @@ class PhantomDownloader(object):
         kw['password']=proxy.password
         kw['user']=proxy.user
         kw['port']=str(proxy.port)
-
+        kw['type']=proxy.type
 
     def req_to_kw(self,req,kw):
         for k, v in self.default_body.items():

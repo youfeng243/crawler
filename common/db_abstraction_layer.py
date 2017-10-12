@@ -106,11 +106,16 @@ class MongoBackend(BaseBackend):
 
     def create_table(self, name):
         mongo_collection = self.db[name]
-        mongo_collection.create_index(
-            MongoBackend.MONGO_ROW_KEY,
-            background = True,
-            unique = True
-        )
+
+        # 因为是唯一索引，所以要确保不会出错
+        try:
+            mongo_collection.ensure_index(
+                MongoBackend.MONGO_ROW_KEY,
+                background=True,
+                unique=True)
+        except Exception as e:
+            log.warn("索引好像已经创建，引起了重建异常:")
+            log.exception(e)
 
     def get(self, table, key):
         mongo_collection = self.db[table]
@@ -142,7 +147,7 @@ class MongoBackend(BaseBackend):
         while not succ and retry_count > 0:
             retry_count -= 1
             try:
-                s = {'$set':{}}
+                s = {'$set': {}}
                 for col in col_defs:
                     s['$set']['docs.' + self.escape_dot(col)] = col_defs[col]
                 mongo_collection.update({MongoBackend.MONGO_ROW_KEY: key}, s, upsert=True)
@@ -162,7 +167,7 @@ class MongoBackend(BaseBackend):
         mongo_collection.update({MongoBackend.MONGO_ROW_KEY: key}, s)
 
     def put(self, table, key, col, value):
-        self.do_put(table, key, {col:value})
+        self.do_put(table, key, {col: value})
 
     def put_multi(self, table, key, col_defs):
         self.do_put(table, key, col_defs)
@@ -202,13 +207,10 @@ class MongoBackend(BaseBackend):
         return res
 
 
-
-
 class DBBackendFactory(object):
-
     backend_map = {
-        'hbase' : HBaseBackend,
-        'mongodb' : MongoBackend
+        'hbase': HBaseBackend,
+        'mongodb': MongoBackend
     }
 
     @staticmethod
@@ -223,7 +225,6 @@ class DBBackendFactory(object):
 
 
 if __name__ == '__main__':
-
     with open('test.toml') as conf_file:
         config = pytoml.load(conf_file)
         print config
@@ -238,7 +239,7 @@ if __name__ == '__main__':
         db.put('fff', 'k1', 'c2', 'v2')
         db.put('fff', 'k1', 'c3', 'v3')
 
-        db.put_multi('fff', 'k1', {'c4':'v4', 'c5':'v5'})
+        db.put_multi('fff', 'k1', {'c4': 'v4', 'c5': 'v5'})
 
         print db.get('fff', 'k1')
 
@@ -263,11 +264,3 @@ if __name__ == '__main__':
         db.drop_table('fff')
 
         print db.list_table()
-
-
-
-
-
-
-
-

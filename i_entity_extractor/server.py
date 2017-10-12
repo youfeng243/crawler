@@ -127,13 +127,13 @@ def process_mq_cleaning(conf):
     signal.signal(signal.SIGINT, exit_isr)
 
     # This is only used by thrift, each process has its own EntityExtractor instance
+
     singletons[EntityExtractor.__name__] = EntityExtractor(conf)
     singletons[EEWorkerPool.__name__] = EEWorkerPool(init_count=conf['server']['server_process_num'],
                                                      conf=conf)
 
     worker_pool = singletons[EEWorkerPool.__name__]
     worker_pool.start_all()
-    conf['log'] = log
     heartbeat_thread = HeartbeatThread("entity_extractor", conf)
     heartbeat_thread.start()
 
@@ -195,6 +195,7 @@ if __name__ == '__main__':
         conf['topic_ids'] = topic_ids
         conf['from_db'] = from_db
         log.init_log(conf, console_out=conf['logger']['console'], name="ee_main_proc")
+        conf['log'] = log
         main(conf)
     except:
         print traceback.format_exc()

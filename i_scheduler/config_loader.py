@@ -245,72 +245,72 @@ class SchedulerConfigLoader:
             results.append(ele)
         return results
 
-    def load_scheduler_mata(self):
-        return {}
+    # def load_scheduler_mata(self):
+    #     return {}
 
-    def load_fail_task(self):
-        result_fail_tasks = {}
-        try:
-            fail_tasks = self.redis_db.lrange(self.redis_tasks['key'], 0, -1)
-            for fail_task in fail_tasks:
-                self.log.info('_load_fail_task : %s' % str(fail_task))
-                json_task = json.loads(fail_task)
-                url_id = None
-                url = None
-                if json_task.has_key('url'):
-                    url = json_task['url']
-                if json_task.has_key('url_id'):
-                    url_id = int(json_task['url_id'])
-                elif url != None:
-                    url_id = get_md5_i64(url)
-                if url_id is None:
-                    self.log.warn("load_fail_task\tstatus:failt\tinfo:%s" % (str(fail_task)))
-                else:
-                    self.log.info("load_fail_task\tstatus:success\turl_id:%d\turl:%s" % (url_id, url))
-                task = {}
-                for key, val in json_task.items():
-                    key = str_obj(key)
-                    val = str_obj(val)
-                    task[key] = val
-                result_fail_tasks[url_id] = task
-            #self.redis_db.delete(self.conf.redis_tasks['key'])
-        except:
-            self.log.error('_load_fail_task error : ' + traceback.format_exc())
-        self.log.info("load_fail_task\tsize:%d" % (len(result_fail_tasks)))
-        return result_fail_tasks
-
-
-def usage():
-    pass
+    # def load_fail_task(self):
+    #     result_fail_tasks = {}
+    #     try:
+    #         fail_tasks = self.redis_db.lrange(self.redis_tasks['key'], 0, -1)
+    #         for fail_task in fail_tasks:
+    #             self.log.info('_load_fail_task : %s' % str(fail_task))
+    #             json_task = json.loads(fail_task)
+    #             url_id = None
+    #             url = None
+    #             if json_task.has_key('url'):
+    #                 url = json_task['url']
+    #             if json_task.has_key('url_id'):
+    #                 url_id = int(json_task['url_id'])
+    #             elif url is not None:
+    #                 url_id = get_md5_i64(url)
+    #             if url_id is None:
+    #                 self.log.warn("load_fail_task\tstatus:failt\tinfo:%s" % (str(fail_task)))
+    #             else:
+    #                 self.log.info("load_fail_task\tstatus:success\turl_id:%d\turl:%s" % (url_id, url))
+    #             task = {}
+    #             for key, val in json_task.items():
+    #                 key = str_obj(key)
+    #                 val = str_obj(val)
+    #                 task[key] = val
+    #             result_fail_tasks[url_id] = task
+    #         #self.redis_db.delete(self.conf.redis_tasks['key'])
+    #     except:
+    #         self.log.error('_load_fail_task error : ' + traceback.format_exc())
+    #     self.log.info("load_fail_task\tsize:%d" % (len(result_fail_tasks)))
+    #     return result_fail_tasks
 
 
-def test(conf):
-    loader = SchedulerConfigLoader(conf['mysql_conf'], conf['mongodb_conf'], conf['redis_tasks'], conf['log'])
-    #site_dict = loader.load_sites("epub.sipo.gov.cn")
-    #print json.dumps(site_dict)
-    #seeds = loader.load_seeds("epub.sipo.gov.cn")
-    #print json.dumps(seeds)
-    seeds = loader.load_seed_by_id(458)
-    print json.dumps(seeds)
-    #loader.load_fail_task()
-
-if __name__ == '__main__':
-    try:
-        file_path = './scheduler.toml'
-        opt, args = getopt.getopt(sys.argv[1:], 'f:', ['help'])
-        for name, value in opt:
-            if name == "-f":
-                file_path = value
-            elif name in ("-h", "--help"):
-                usage()
-                sys.exit()
-            else:
-                assert False, "unhandled option"
-
-        with open(file_path, 'rb') as config:
-            conf = pytoml.load(config)
-            conf['log']=LogHandler(conf['server']['name']+str(conf['server']['port']))
-        test(conf)
-
-    except getopt.GetoptError:
-        sys.exit()
+# def usage():
+#     pass
+#
+#
+# def test(conf):
+#     loader = SchedulerConfigLoader(conf['mysql_conf'], conf['mongodb_conf'], conf['redis_tasks'], conf['log'])
+#     #site_dict = loader.load_sites("epub.sipo.gov.cn")
+#     #print json.dumps(site_dict)
+#     #seeds = loader.load_seeds("epub.sipo.gov.cn")
+#     #print json.dumps(seeds)
+#     seeds = loader.load_seed_by_id(458)
+#     print json.dumps(seeds)
+#     #loader.load_fail_task()
+#
+# if __name__ == '__main__':
+#     try:
+#         file_path = './scheduler.toml'
+#         opt, args = getopt.getopt(sys.argv[1:], 'f:', ['help'])
+#         for name, value in opt:
+#             if name == "-f":
+#                 file_path = value
+#             elif name in ("-h", "--help"):
+#                 usage()
+#                 sys.exit()
+#             else:
+#                 assert False, "unhandled option"
+#
+#         with open(file_path, 'rb') as config:
+#             conf = pytoml.load(config)
+#             conf['log']=LogHandler(conf['server']['name']+str(conf['server']['port']))
+#         test(conf)
+#
+#     except getopt.GetoptError:
+#         sys.exit()

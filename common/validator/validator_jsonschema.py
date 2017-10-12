@@ -138,4 +138,4 @@ class JsonSchemaValidator(ValidatorBase):
             lacking_required = False
             if jve.validator == u'required':
                 lacking_required = True
-            raise ValidateError('Jsonschema validate error:{}'.format(jve.message), vars(jve), is_lacking_required=lacking_required)
+            raise ValidateError('Jsonschema validate error:[{}]\t{}'.format(jve.absolute_path[0], jve.message), vars(jve), is_lacking_required=lacking_required)

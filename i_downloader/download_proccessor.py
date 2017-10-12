@@ -34,7 +34,7 @@ class DownloaderProccessor(NormalProccessor):
             download_req.read(tBinaryProtocol_o)
             self.log.info("request_msg\t%s" % (download_req))
             download_rsp = self.downloader.download(download_req)
-            self.log.debug(download_rsp)
+            self.log.debug('haizhi- do_task %s' % str(download_rsp))
             return self.to_string(download_rsp)
         except EOFError, e:
             self.log.warning("cann't read DownLoadRsp from string")

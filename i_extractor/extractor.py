@@ -515,15 +515,15 @@ class Extractor(object):
                 raise NoBodyException()
             if download_rsp.content_type and download_rsp.content_type.find("text") < 0 and download_rsp.content_type.find('json') < 0:
                 raise NoNeedParseException()
-            if download_rsp.content == None or len(download_rsp.content) < 1:
-                self.log.warning('download_rsp_content:null'.format(download_rsp.url))
+            if download_rsp.content is None or len(download_rsp.content) < 1:
+                self.log.error('haizhi- url = {} download_rsp_content:null'.format(download_rsp.url))
                 raise NoBodyException()
 
             is_debug = parse_extends.get('debug', False)
             # 网页编码
             body, charset = self.decode_body(download_rsp.content, download_rsp.url)
-            if body == None:
-                self.log.warning('occur error when decoding download_rsp.content'.format(download_rsp.url))
+            if body is None:
+                self.log.error('haizhi- url = {} occur error when decoding download_rsp.content'.format(download_rsp.url))
                 raise PageDecodeException()
             html_parser = HTMLParser.HTMLParser()
             body = html_parser.unescape(body)
@@ -560,9 +560,10 @@ class Extractor(object):
                 if next_page_link:
                     next_page_link.anchor = "下一页"
                     custom_links.append(next_page_link)
-                self.log.info("url:{}\tget_next_page:{}".format(download_rsp.url,str(next_page_link)))
-            except Exception as e:
-                self.log.warning('get next_page_link failed, because of: {}'.format(download_rsp.url,traceback.format_exc()))
+                self.log.info("url:{}\tget_next_page:{}".format(download_rsp.url, str(next_page_link)))
+            except Exception:
+                self.log.error('haizhi- url = {} get next_page_link failed, because of: {}'.format(
+                    download_rsp.url, traceback.format_exc()))
 
             if parser_config.plugin:
                 try:
@@ -570,7 +571,8 @@ class Extractor(object):
                         extract_entry = self.plugin_handler.get_plugin_entry(plugin_info)
                         results = extract_entry(download_rsp.url, crawl_info.content, results)
                 except Exception as e:
-                    self.log.info("url:{}\tplugin extract error, because of: {}".format(download_rsp.url, e.message))
+                    self.log.error("haizhi- url:{}\tplugin extract error, because of: {}".format(
+                        download_rsp.url, traceback.format_exc()))
                     raise e
             results['links'] = self.fix_links_info(results['links'], custom_links, parser_config)
             link_cnt = 0
@@ -634,8 +636,9 @@ class Extractor(object):
             pageparse_info.crawl_info = crawl_info
             pageparse_info.parse_extends = json.dumps(parse_extends)
             pageparse_info.scheduler = download_rsp.scheduler
-            self.log.info('url:{}\tstruct_type:{}\tex_status:{}\terror_code:{}\tspend_time:{:.2f}ms'.format(download_rsp.url,
-                extract_info.struct_type,extract_info.ex_status, extract_info.extract_error, (time.time() - _start_time)*1000))
+            self.log.info('haizhi- url:{}\tstruct_type:{}\tex_status:{}\terror_code:{}\tspend_time:{:.2f}ms'.format(
+                download_rsp.url, extract_info.struct_type,extract_info.ex_status,
+                extract_info.extract_error, (time.time() - _start_time)*1000))
             return pageparse_info
 
     def save_parser_config(self, config_json):

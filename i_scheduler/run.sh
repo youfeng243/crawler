@@ -3,23 +3,24 @@
 source `dirname $0`/../env.sh
 
 Prog=python
-FileName="$CRAWLER_PATH/deploy_conf/new_scheduler.toml"
-#FileName='/Users/yanghaoying/Work/i_crawler/i_scheduler/server.py'
-Cut=${FileName%%.*}
+FileName="$CRAWLER_PATH/i_scheduler/scheduler.toml"
 
 start() {
 	status
-    cd bin
-    chmod 0700 monitrc
-    ./monit 
-    ./monit start scheduler
-
+    if [ $? = 0 ]; then
+        echo "调度程序已经启动, 不需要再启动..."
+        return
+    fi
+    nohup sh scheduler_monitor.sh > /dev/null 2>&1  &
+    echo "调度程序启动成功..."
 }
 
 stop() {
-	status
-    cd bin
-    ./monit stop scheduler
+
+    ps -ef | grep scheduler_monitor |grep -v grep|awk '{print $2}' | xargs kill -9
+    ps -ef|grep "scheduler.toml"|grep -v grep|awk '{print $2}' | xargs kill -9
+    echo "调度器关闭完成..."
+
 }
 
 restart() {
@@ -29,8 +30,9 @@ restart() {
 
 
 status() {
-	Pid=`ps -ef | grep $FileName | grep $Prog | grep -v grep | awk '{print $2}'`
-    [ -n $Pid ] && echo "$Pid" && return 1
+	Pid=`ps -ef | grep scheduler_monitor |grep -v grep|awk '{print $2}'`
+    [ "$Pid" != "" ] && echo "$Pid" && return 0
+    return 1
 }
 
 

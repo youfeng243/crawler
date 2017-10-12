@@ -31,6 +31,8 @@ FIELDNAME_SOURCE = '_src'
 FIELDNAME_IN_TIME = '_in_time'
 FIELDNAME_UTIME = '_utime'
 
+DOWNLOAD_TIME = 'download_time'
+
 class MetaFields:
     RECORD_ID = FIELDNAME_RECORD_ID
     SRC = FIELDNAME_SOURCE

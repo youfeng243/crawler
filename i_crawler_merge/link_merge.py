@@ -213,8 +213,10 @@ class LinkMerge():
             "site": self.url_info.get("site"),
             "site_id": self.url_info.get("site_id"),
             "link_attr": pickle.dumps(link_attr),
-            "status": FRESH_STATUS.IS_NOT_NEW,
+            "status": FRESH_STATUS.IS_NOT_NEW,#对后面影响比较关键,new才会继续抓
         }
+        # if link_attr.crawl_info.status_code != 0:  # 没有重试机制保证，防止无效的url无限反复调度抓取，咱先注释掉
+        #     obj["status"] = FRESH_STATUS.IS_NEW  # 修改，对下载失败的链接不入链接库
         if link_attr.crawl_info.download_time:
             obj['download_time'] = timestampToTimestr(float(link_attr.crawl_info.download_time))
         else:

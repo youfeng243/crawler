@@ -4,21 +4,25 @@ from simple import SimpleDownloader
 
 
 class Downloader(object):
-    def __init__(self,conf):
-        self.conf=conf
+    def __init__(self, conf):
+        self.conf = conf
         self.downloaders = {
-            'simple':  SimpleDownloader(conf),
+            'simple': SimpleDownloader(conf),
             'phantom': PhantomDownloader(conf),
         }
+        self.log = conf.get('log')
 
     def download(self, req):
         downloader = self.downloaders.get(req.download_type)
         if downloader:
-            res= downloader.download(req)
+            res = downloader.download(req)
         else:
-            res= self.downloaders.get('simple').download(req)
+            res = self.downloaders.get('simple').download(req)
+        if res:
+            self.log.info('haizhi- downloader %s' % res.url)
         return res
-    #回收downloader一的些资源比如phantomjs进程
+
+    # 回收downloader一的些资源比如phantomjs进程
     def stop(self):
         if not self.downloaders:
             return
