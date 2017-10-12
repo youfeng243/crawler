@@ -42,7 +42,7 @@ KAFKA_CONFIG = {
      "zk_host":'172.18.180.223:2181,172.18.180.222:2181,172.18.180.225:2181',
      'download_rsp_tube':'realtime_download_rsp'
  }
-MYSQL = "mysql://work:haizhi@)@127.0.0.1:3306/cmb_crawl?charset=utf8"
+MYSQL = "mysql://root:haizhi@)@127.0.0.1:3306/cmb_crawl?charset=utf8"
 
 REDIS = {
     'host': '127.0.0.1',  # 线上redisIP

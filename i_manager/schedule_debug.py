@@ -102,7 +102,7 @@ class ScheduleDebug:
             query = session.query(Settings)
             records = query.filter(Settings.item == mongo_item).all()
             for record in records:
-                mongodb_conf['host'] = '127.0.0.1'
+                mongodb_conf['host'] = '172.17.1.119'
                 mongodb_conf['port'] = record.value['port']
                 mongodb_conf['database'] = record.value['database']
                 mongodb_conf['username'] = record.value['user']

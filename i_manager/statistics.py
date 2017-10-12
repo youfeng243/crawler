@@ -27,10 +27,12 @@ class Statistics:
             query = session.query(Settings)
             records = query.filter(Settings.item == 'mongodb').all()
             for record in records:
-                self.mongodb_conf['host'] = '127.0.0.1'
+                self.mongodb_conf['host'] = '172.17.1.119'
                 self.mongodb_conf['port'] = record.value['port']
                 self.mongodb_conf['database'] = record.value['database']
-                self.mongodb_conf['user'] = record.value['user']
+		if record.value['database']=='final_data':                
+		    self.mongodb_conf['database'] = 'app_data'
+		self.mongodb_conf['user'] = record.value['user']
                 self.mongodb_conf['password'] = record.value['password']
                 break;
             session.close();

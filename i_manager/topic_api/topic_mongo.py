@@ -12,7 +12,7 @@ class TopicMongo:
             session = current_app.config['Dsession']()
             records = session.query(Settings).filter_by(item='mongodb').all()
             for record in records:
-                self.mongodb_conf['host'] = '127.0.0.1'
+                self.mongodb_conf['host'] = '172.17.1.119'
                 self.mongodb_conf['port'] = record.value['port']
                 self.mongodb_conf['database'] = record.value['database']
                 break
