@@ -28,7 +28,9 @@ class SiteSchedulerManager(object):
         self.dispatched_task_queue = Queue()
         # 初始化配置加载器,包括种子与站点
         self.loader = SchedulerConfigLoader(conf, conf['mongodb_conf'], conf['redis_tasks'], conf['log'])
+        self.log.info("开始加载种子信息...")
         self.sites = self.loader.load_sites()
+        self.log.info("加载种子信息完成...")
         #self.seeds = self.loader.load_seeds(self.sites);
         self.site_empty = {}
         self.site_schedulers = {}
@@ -94,7 +96,9 @@ class SiteSchedulerManager(object):
         self.log.info("start on site:%s, site_id:%s" % (site, site_id))
         site_scheduler = self.site_schedulers.get(site_id, None)
         if not site_scheduler:
+            self.log.info("当前需要加载站点信息: site = {}".format(site))
             sites = self.loader.load_sites(site)
+            self.log.info("加载站点信息完成: site = {}".format(site))
             if sites and len(sites) > 0:
                 site_info = sites[site]
                 site_id = int(site_info['site_id'])
@@ -103,7 +107,9 @@ class SiteSchedulerManager(object):
                 self.site_schedulers[site_id] = site_scheduler
         else:
             try:
+                self.log.info("当前需要加载站点信息: site = {}".format(site))
                 sites = self.loader.load_sites(site)
+                self.log.info("加载站点信息完成: site = {}".format(site))
                 if sites and len(sites) > 0 and sites.has_key(site):
                     site_info = sites[site]
                     site_scheduler.reload_site(site_info)
