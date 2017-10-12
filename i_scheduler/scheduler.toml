@@ -33,7 +33,7 @@ password        =   "haizhi@)"
 
 # mongo数据库配置
 [mongodb_conf]
-host = '127.0.0.1'
+host = '172.17.1.119'
 port = 40042
 database = 'crawl_params'
 username="work"
