@@ -35,10 +35,10 @@ class SiteSchedulerManager(object):
         self.site_empty = {}
         self.site_schedulers = {}
         self.running_site_schedulers = {}
-        # 加载抓取失败数据
-        self.fail_infos = self.loader.load_fail_task()
-        # 加载种子调度信息
-        self.scheduler_meta = self.loader.load_scheduler_mata()
+        # # 加载抓取失败数据
+        # self.fail_infos = self.loader.load_fail_task()
+        # # 加载种子调度信息
+        # self.scheduler_meta = self.loader.load_scheduler_mata()
 
     def save_status(self):
         for site_id, site_scheduler in self.running_site_schedulers.items():
