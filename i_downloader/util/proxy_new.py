@@ -1,19 +1,15 @@
 # -*- coding:utf-8    -*-
-import copy
 import json
 import os
 import time
-import traceback
 
 import requests
 from redis import StrictRedis
-from requests.exceptions import ProxyError
 
-proxy_url = 'http://112.74.163.187:23128/__static__/proxies.txt'
 proxies_file = os.path.join(os.path.dirname(__file__), 'proxies_400.txt')
 
 
-class Proxies():
+class Proxies(object):
     def __init__(self, log, config, default_status=1, start_index=0, proxy_faile_mark=0):
         self.log = log
         self.redis_conf = config
@@ -25,118 +21,117 @@ class Proxies():
                                          db=self.redis_conf['database'], password=self.redis_conf['password'])
 
     def init_proxy(self):
-        now_time = -1
         try:
             now_time = json.loads(self.redis_connect.lindex(self.proxy_name, 0))['in_time']
         except Exception as e:
             now_time = -1
+            self.log.exception(e)
         if time.time() - now_time < 3600:
             return
         try:
-            resp = requests.get(proxy_url)
-            assert resp.status_code == 200
-            with open(proxies_file, "w") as fp:
-                fp.write(resp.content)
             self.redis_connect.flushdb()
             self.read_file()
         except Exception as e:
-            pass
+            self.log.error("加载静态代理信息失败: ")
+            self.log.exception(e)
+
+    def get_dynamic_proxy(self):
+        proxy_url = 'http://101.132.128.78:18585/proxy'
+
+        user_config = {
+            'username': 'beihai',
+            'password': 'beihai',
+        }
+        for _ in xrange(3):
+
+            try:
+                r = requests.post(proxy_url, json=user_config, timeout=10)
+                if r.status_code != 200:
+                    continue
+                json_data = json.loads(r.text)
+                is_success = json_data.get('success')
+                if not is_success:
+                    continue
+
+                proxy = json_data.get('proxy')
+                if proxy is None:
+                    continue
+
+                self.log.info("获取远程代理成功: proxy = {}".format(proxy))
+                return proxy
+            except Exception as e:
+                self.log.error('获取代理异常:')
+                self.log.exception(e)
+
+        return None
 
     def read_file(self):
         with open(proxies_file) as fr:
             proxies = fr.read().splitlines()
             for i in proxies:
-                dict = self.file2dict(i)
-                dict["status"] = self.default_status
-                proxy_str = self.dict2str(dict)
+                proxy_dict = self.file_to_dict(i)
+                proxy_dict["status"] = self.default_status
+                proxy_str = self.dict2str(proxy_dict)
                 self.redis_connect.rpush(self.proxy_name, proxy_str)
-
-    # 测试更新全量代理
-    def updateall_proxy(self):
-        strlist = self.findall()
-        dictlist = self.strlist2dictlist(strlist)
-        for olddict in dictlist:
-            try:
-                res = self.testOne_proxy(olddict)
-                newdict = copy.deepcopy(olddict)
-                newdict["status"] = res
-                newdict["check_time"] = time.time()
-                oldproxy = self.dict2str(olddict)
-                newproxy = self.dict2str(newdict)
-                self.update_proxy(oldproxy, newproxy)
-                self.log.info("update\t{0}\tto\t{1}success".format(oldproxy, newproxy))
-            except Exception:
-                self.log.error("update\t{0}\tto\t{1}fail\t{2}".format(oldproxy, newproxy, traceback.print_stack()))
 
     # 根据站点轮询获取代理
     def get_proxy(self, site):
+
+        proxy = self.get_dynamic_proxy()
+        if proxy is not None:
+            return proxy
+
         p = self.redis_connect.pipeline(transaction=True)
         flag = 0
         proxy = 0
         while flag == 0:
             index = self.get_index(site)
-            str = self.get_item(index)
-            dict = self.str2dict(str)
-            flag = dict["status"]
-            proxy = self.dict2proxy(dict)
+            proxy_str = self.get_item(index)
+            proxy_dict = self.str2dict(proxy_str)
+            flag = proxy_dict["status"]
+            proxy = self.dict_to_proxy(proxy_dict)
             if flag == 0:
                 continue
             if self.is_exit_index(self.site_to_key(site, proxy)):
                 flag = 0
                 continue
         p.execute(raise_on_error=True)
+        self.log.warn("获取动态代理失败，需要用静态代理: {}".format(proxy))
         return proxy
 
-    def findbyip(self, ip):
-        strlist = self.findall()
-        dictlist = self.strlist2dictlist(strlist)
-        for i in dictlist:
-            if ip == i.get("ip"):
-                return i
-
-    def proxy_cannot_ping(self, aim_proxy):
-        dict = self.proxy2dict(aim_proxy)
-        old_proxy = self.dict2str(self.findbyip(dict.get("ip")))
-        new_dict = self.str2dict(old_proxy)
-        new_dict["status"] = 0
-        new_dict["check_time"] = time.time()
-        new_proxy = self.dict2str(new_dict)
-        self.update_proxy(old_proxy, new_proxy)
-
     # 文件格式转化
-    def file2dict(self, str):
-        dict = {}
-        dict["type"] = "http"
-        user = str.split('@')[0]
-        ip = str.split('@')[1]
-        dict["user"] = user.split(':')[0]
-        dict["password"] = user.split(':')[1]
-        dict["ip"] = ip.split(':')[0]
-        dict["port"] = int(ip.split(':')[1])
-        dict["in_time"] = time.time()
-        dict["check_time"] = time.time()
-        return dict
+    def file_to_dict(self, proxy_str):
+        proxy_dict = {"type": "http"}
+        user = proxy_str.split('@')[0]
+        ip = proxy_str.split('@')[1]
+        proxy_dict["user"] = user.split(':')[0]
+        proxy_dict["password"] = user.split(':')[1]
+        proxy_dict["ip"] = ip.split(':')[0]
+        proxy_dict["port"] = int(ip.split(':')[1])
+        proxy_dict["in_time"] = time.time()
+        proxy_dict["check_time"] = time.time()
+        return proxy_dict
 
     # 6个方法各种转化
-    def proxy2dict(self, proxys):
-        dict = {}
-        type = proxys.split('://')[0]
-        user = proxys.split('://')[1].split('@')[0]
-        ip = proxys.split('://')[1].split('@')[1]
-        dict["user"] = user.split(':')[0]
-        dict["password"] = user.split(':')[1]
-        dict["ip"] = ip.split(':')[0]
-        dict["port"] = int(ip.split(':')[1])
-        dict["type"] = type
-        return dict
+    def proxy_to_dict(self, proxy_str):
+        proxy_dict = {}
+        proxy_type = proxy_str.split('://')[0]
+        user = proxy_str.split('://')[1].split('@')[0]
+        ip = proxy_str.split('://')[1].split('@')[1]
+        proxy_dict["user"] = user.split(':')[0]
+        proxy_dict["password"] = user.split(':')[1]
+        proxy_dict["ip"] = ip.split(':')[0]
+        proxy_dict["port"] = int(ip.split(':')[1])
+        proxy_dict["type"] = proxy_type
+        return proxy_dict
 
-    def dict2proxy(self, dict):
-        type = dict.get("type")
+    def dict_to_proxy(self, dict):
+        proxy_type = dict.get("type")
         ip = dict.get("ip")
         port = dict.get("port")
         user = dict.get("user")
         password = dict.get("password")
-        proxy = type + "://" + user + ":" + password + "@" + ip + ":" + str(port)
+        proxy = proxy_type + "://" + user + ":" + password + "@" + ip + ":" + str(port)
         return proxy
 
     def dict2str(self, dict):
@@ -156,22 +151,6 @@ class Proxies():
         for i in strlist:
             dictlist.append(self.str2dict(i))
         return dictlist
-
-    def get_utime(self):
-
-        pass
-
-    # 定期测试全量代理并更新状态
-    def update_proxy_time(self, proxy_test_available):
-        while True:
-            time.sleep(200)
-            now_time = json.loads(self.redis_connect.lindex(self.proxy_name, 0))['in_time']
-            if time.time() - now_time > proxy_test_available:
-                now_time = time.time()
-                try:
-                    self.init_proxy()
-                except Exception as e:
-                    pass
 
     # 判断key是否存在
     def is_exit_index(self, site):
@@ -193,11 +172,6 @@ class Proxies():
         self.redis_connect.set(site, (int(index) + 1) % lens)
         return index
 
-    # 站点和代理合并
-    def site_proxy_mark(self, site, proxy):
-        mark = '%s#%s' % (site, proxy)
-        self.redis_connect.set(mark, self.proxy_faile_mark, ex=6 * 3600)
-
     # 将站点转换为redis中的key
     def site_to_key(self, site, proxy):
         return '%s#%s' % (site, proxy)
@@ -210,105 +184,6 @@ class Proxies():
         except Exception as e:
             self.log.info("findall\tfail\treason:{}".format(e.message))
 
-    # 添加代理
-    def add_one_proxy(self, dict):
-        try:
-            dict['type'] = 'http'
-            dict['in_time'] = time.time()
-            dict['check_time'] = time.time()
-            dict['status'] = 1
-            str = self.dict2str(dict)
-            self.redis_connect.rpush(self.proxy_name, str)
-            return 1
-        except Exception as e:
-            return 0
-
-    # 把代理映射成index
-    def find_index(self, aim_proxy):
-        dict_list = self.findall()
-        return dict_list.index(aim_proxy)
-
-    # 更新代理tuple
-    def update_proxy(self, oldproxy, newproxy):
-        p = self.redis_connect.pipeline(transaction=True)
-        index = self.find_index(oldproxy)
-        self.redis_connect.lset(self.proxy_name, index=index, value=newproxy)
-        p.execute(raise_on_error=True)
-
-    # 删除全部代理
-    def remove_all(self):
-        self.redis_connect.delete(self.proxy_name)
-
-    # 根据ip删除代理
-    def removebyip(self, ip):
-        try:
-            dict = self.findbyip(ip)
-            str = self.dict2str(dict)
-            self.redis_connect.lrem(self.proxy_name, 0, str)
-            return 1
-        except Exception as e:
-            return 0
-
-    # 删除代理list
-    def remove_proxy(self, list):
-        try:
-            for i in list:
-                self.redis_connect.lrem(self.proxy_name, 0, i)
-            return 1
-        except Exception as e:
-            self.log.error("remove\tproxy\tfail\treason:{}".format(e.message))
-            return 0
-
     # 由index获取代理
     def get_item(self, index):
         return self.redis_connect.lindex(self.proxy_name, index)
-
-    def get_proxy_detail(self):
-        strlist = self.findall()
-        dictlist = self.strlist2dictlist(strlist)
-        fail_num = 0
-        success_num = 0
-        for i in dictlist:
-            if i.get("status") == 0:
-                fail_num += 1
-            else:
-                success_num += 1
-        return dictlist, fail_num, success_num
-
-    def testlist_proxy(self):
-        for i in self.strlist2dictlist(self.findall()):
-            self.testOne_proxy(i)
-
-        pass
-
-    def get_all_ip(self):
-        strlist = self.findall()
-        dictlist = self.strlist2dictlist(strlist)
-        iplist = []
-        for i in dictlist:
-            iplist.append(i.get('ip'))
-        return iplist
-
-    # 测试代理是否可用
-    def testOne_proxy(self, dict):
-        try:
-            ip = dict.get("ip")
-            port = dict.get("port")
-            user = dict.get("user")
-            password = dict.get("password")
-            url = 'http://www.baidu.com'
-            proxy = user + ":" + password + "@" + ip + ":" + str(port)
-            kw = {}
-            kw['proxies'] = {
-                'http': 'http://%s' % (proxy),
-                'https': 'https://%s' % (proxy)
-            }
-            res = requests.get(url=url, timeout=10, **kw)
-            if res.status_code == 200:
-                return 1
-            else:
-                return 0
-        except ProxyError as e:
-            return 0
-        except Exception as e:
-            return 1

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import threading
 import traceback
 
 from bdp.i_crawler.i_downloader.ttypes import Proxy
@@ -13,18 +12,15 @@ class HttpProxyMiddleware(object):
         self.proxy = Proxies(log=self.logger, config=conf.get('redis_proxies'))
 
         self.proxy.init_proxy()
-        self.proxy.update_proxy_available = threading.Thread(target=self.proxy.update_proxy_time,
-                                                             args=(self.proxy.redis_conf['proxy_test_available'],))
-        self.proxy.update_proxy_available.start()
 
     def process_request(self, request):
-        if request.use_proxy == True:
+        if request.use_proxy:
             try:
                 site = request.url.split('/')[2]
                 proxy = self.proxy.get_proxy(site)
                 proxy = self.format_proxy(proxy)
                 proxy_req = request.proxy
-                if proxy_req != None:
+                if proxy_req is not None:
                     return
                 else:
                     request.proxy = proxy
@@ -40,10 +36,10 @@ class HttpProxyMiddleware(object):
             # aim_proxy=self.proxy_to_str(request.proxy)
             if hasattr(request, 'identify_status') and request.use_proxy == True:
                 aim_proxy = self.proxy_to_str(request.proxy)
-                if request.identify_status == 8:
-                    self.proxy.proxy_cannot_ping(aim_proxy)
-                if request.identify_status == 7:
-                    self.proxy.site_proxy_mark(site, aim_proxy)
+                # if request.identify_status == 8:
+                #     self.proxy.proxy_cannot_ping(aim_proxy)
+                # if request.identify_status == 7:
+                #     self.proxy.site_proxy_mark(site, aim_proxy)
         except Exception as e:
             self.logger.error('url:%s\tproxy:%s format error reason is %s' % (request.url, aim_proxy, e.message))
 

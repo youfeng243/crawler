@@ -24,7 +24,7 @@ def regex_remove_time(var_str):
     return re.sub(pat_time, ' ', var_str)
 
 
-def file2dict(path):
+def file_to_dict(path):
     file = open(path)
     dict = {}
     for line in file.readlines():
@@ -49,7 +49,7 @@ province_conf_path = basic_path + 'i_entity_extractor/dict/province_city.conf'
 region_city_path = basic_path + 'i_entity_extractor/dict/region_city.conf'
 phone_city = basic_path + 'i_entity_extractor/dict/phonenum_city.conf'
 city_path = basic_path + 'i_entity_extractor/dict/city.conf'
-province_city = file2dict(province_conf_path)
+province_city = file_to_dict(province_conf_path)
 province_parser = ProvinceParser(province_conf_path, phone_city, region_city_path, city_path)
 
 

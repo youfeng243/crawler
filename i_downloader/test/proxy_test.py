@@ -5,8 +5,6 @@ import traceback
 from multiprocessing.dummy import Pool as ThreadPool
 import time
 from functools import partial
-from proxy_server import Proxies
-import os
 proxies_file = '../util/proxies_400.txt'
 def read_proxies(proxies_file):
     with open(proxies_file) as fr:
