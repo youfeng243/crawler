@@ -37,11 +37,7 @@ BEANSTALKD_CONFIG = {
     "port":11300,
     'download_rsp_tube':'download_rsp'
 }
-KAFKA_CONFIG = { 
-     "kafka_host":'172.18.180.223:9092,172.18.180.222:9092,172.18.180.225:9092',
-     "zk_host":'172.18.180.223:2181,172.18.180.222:2181,172.18.180.225:2181',
-     'download_rsp_tube':'realtime_download_rsp'
- }
+
 MYSQL = "mysql://work:haizhi@)@Crawler-DataServer1:3306/cmb_crawl?charset=utf8"
 
 REDIS = {
