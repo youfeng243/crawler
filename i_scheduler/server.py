@@ -1,16 +1,18 @@
 #!/usr/bin/Python
 # coding=utf-8
+import getopt
 import signal
 import sys
-import os
 import traceback
-import getopt
+
 import pytoml
-from scheduler import Scheduler
-from scheduler_proccessor import SchedulerProccessor 
-from thrift.transport import TSocket, TTransport
 from thrift.protocol import TBinaryProtocol
 from thrift.server import TServer
+from thrift.transport import TSocket, TTransport
+
+from scheduler import Scheduler
+from scheduler_proccessor import SchedulerProccessor
+
 sys.path.append('..')
 from i_util.thread_pool import ThreadPool
 from i_util.input_thread import InputThread
@@ -29,7 +31,8 @@ class SchedulerServer(object):
         self.log = conf['log']
         self.scheduler = scheduler
         self.process_thread_num = conf['server']['process_thread_num']
-        thread_locals = {'processor': (SchedulerProccessor, (conf['log'], self.scheduler)), 'profiler': (profiler_creator, ())}
+        thread_locals = {'processor': (SchedulerProccessor, (conf['log'], self.scheduler)),
+                         'profiler': (profiler_creator, ())}
         self.process_pool = ThreadPool(self.process_thread_num, thread_locals)
         self.input_thread = InputThread(conf['beanstalk_conf'], conf['log'], self.process_pool)
         self.heartbeat_thread = HeartbeatThread('scheduler', self.conf)
@@ -47,7 +50,6 @@ class SchedulerServer(object):
 
 
 class ScheduleHandler(object):
-
     def __init__(self, scheduler):
         self.scheduler = scheduler
 
@@ -98,10 +100,11 @@ def main(conf):
         server = TServer.TThreadPoolServer(processor, transport, tfactory, pfactory, daemon=True)
         server.setNumThreads(conf['server']['server_thread_num'])
         server.serve()
-    except Exception, e:
+    except Exception as e:
+        log.error("调度器启动失败...")
+        log.exception(e)
         conf['log'].error(str(traceback.format_exc()))
         scheduler_server.stop("fail")
-        os.exit(1)
     scheduler_server.stop("success")
 
 
@@ -126,12 +129,14 @@ if __name__ == '__main__':
             conf = pytoml.load(config)
 
         log.init_log(conf, level=conf['logger']['level'], console_out=conf['logger']['console'],
-                     name=conf['server']['name']+str(conf['server']['port']))
+                     name=conf['server']['name'] + str(conf['server']['port']))
         conf['log'] = log
 
         main(conf)
         exit(0)
 
     except Exception, e:
+        log.error("调度器启动失败...")
+        log.exception(e)
         print traceback.format_exc()
         sys.exit(1)
